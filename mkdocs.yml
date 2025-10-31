@@ -115,6 +115,7 @@ markdown_extensions:
   - pymdownx.tilde
   - pymdownx.snippets
   - pymdownx.blocks.caption
+  - pymdownx.critic
 
 plugins: 
   - glightbox:
