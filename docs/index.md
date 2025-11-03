@@ -22,3 +22,12 @@
 <p align="center">
     <img src="./images/git_and_github.png" alt="drawing" width="300">
 </p>
+
+
+!!! copyright "Attribution Notice"
+
+    Materials used in these lessons are derived from
+     
+    - Software Carpentry (2025, June 24). _Version Control with Git_.  https://swcarpentry.github.io/git-novice/index.html
+    - Universith of British Columbia - Library (2025, Sep 17) _Introduction to Git and Github_. https://ubc-library-rc.github.io/intro-git/
+    - Straub, B., Chacon, S.,(2014)_Pro Git_. https://git-scm.com/book/en/v2
