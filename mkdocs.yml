@@ -49,7 +49,7 @@ theme:
     - navigation.expand
     - navigation.top
     - navigation.footer
-    - navigation.tabs
+#    - navigation.tabs
     - navigation.indexes
     - content.code.copy
     - content.code.annotate
