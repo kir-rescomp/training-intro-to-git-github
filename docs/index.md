@@ -23,7 +23,9 @@
     <img src="./images/git_and_github.png" alt="drawing" width="300">
 </p>
 
+!!! table "Table of contents"
 
+    1. [Introductino to Version Control](./2.what_is_versioncontrol.md)
 !!! copyright "Attribution Notice"
 
     Materials used in these lessons are derived from
@@ -55,3 +57,6 @@
   
 
     >The GitHub documentation provides [more details about configuring 2FA](https://docs.github.com/en/authentication/securing-your-account-with-two-factor-authentication-2fa/configuring-two-factor-authentication)
+
+
+
