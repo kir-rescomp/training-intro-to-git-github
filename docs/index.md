@@ -25,7 +25,7 @@
 
 !!! table "Table of contents"
 
-    1. [Introductino to Version Control](./2.what_is_versioncontrol.md)
+    1. [Introductino to Version Control](./1.what_is_versioncontrol.md)
 !!! copyright "Attribution Notice"
 
     Materials used in these lessons are derived from
