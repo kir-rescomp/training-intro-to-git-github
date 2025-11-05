@@ -138,3 +138,4 @@ copyright : KIR "Introduction to Git and Github" is licensed under a <a rel="noo
 extra_css:
   - stylesheets/extra.css
   - stylesheets/catalogue-return-button.css
+  - stylesheets/side_bar_menu.css
