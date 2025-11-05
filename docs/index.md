@@ -26,6 +26,7 @@
 !!! table "Table of contents"
 
     1. [Introduction to Version Control](./1.what_is_versioncontrol.md)
+    2. [Introduction to Git](./2.git_and_gitcommands.md)
 
 
 
