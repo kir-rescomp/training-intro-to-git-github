@@ -366,7 +366,7 @@
   }
   .md-typeset .admonition.screwdriver-wrench,
   .md-typeset details.screwdriver-wrench {
-    border-color: rgb(140, 141, 141);
+    border-color: rgba(244, 231, 169, 0.694);
   }
   .md-typeset .screwdriver-wrench > .admonition-title,
   .md-typeset .screwdriver-wrench > summary {
