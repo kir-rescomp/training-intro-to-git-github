@@ -1155,16 +1155,16 @@
 }
 .md-typeset .admonition.code-branch,
 .md-typeset details.code-branch {
-  border-color: rgb(223, 219, 214);
+  border-color: rgba(248, 247, 246, 0.178);
 }
 .md-typeset .code-branch > .admonition-title,
 .md-typeset .code-branch > summary {
-  color:rgb(240, 235, 235);
-  background-color: rgb(12, 4, 1);
+  color:rgb(13, 12, 34);
+  background-color: rgb(243, 226, 36);
 }
 .md-typeset .code-branch > .admonition-title::before,
 .md-typeset .code-branch > summary::before {
-  background-color: rgb(238, 238, 243);
+  background-color: rgb(5, 5, 84);
   -webkit-mask-image: var(--md-admonition-icon--code-branch);
           mask-image: var(--md-admonition-icon--code-branch);
 }
