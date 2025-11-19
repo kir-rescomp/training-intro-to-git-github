@@ -70,7 +70,7 @@ theme:
   language: en
   font:
     text: Mukta
-    code: Fira Code
+    code: Inconsolata
 
 markdown_extensions:
   - abbr
