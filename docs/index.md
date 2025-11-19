@@ -29,6 +29,9 @@
     1. [Introduction to Version Control](./1.what_is_versioncontrol.md)
     2. [Introduction to Git](./2.intro_to_git.md)
     3. [Setting up Git](./3.setting_up_git.md)
+    4. [Git Concepts, Data Model and Commands](./4.git_model_commands.md)
+    5. [From Local Collaborative - Introduction to Github](./5.from_git_to_github.md)
+    6. [Resolving Merge Conflicts](6.conflicts.md)
 
 
 
