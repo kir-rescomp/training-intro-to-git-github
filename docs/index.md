@@ -23,6 +23,7 @@
     <img src="./images/git_and_github.png" alt="drawing" width="300">
 </p>
 
+
 !!! table "Table of contents"
 
     1. [Introduction to Version Control](./1.what_is_versioncontrol.md)
