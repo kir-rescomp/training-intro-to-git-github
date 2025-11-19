@@ -41,6 +41,8 @@
     - Straub, B., Chacon, S.(2014)_Pro Git_. https://git-scm.com/book/en/v2
     - Richardson, B (2025). _Git Crash Course for Beginners_. https://gist.github.com/brandon1024/14b5f9fcfd982658d01811ee3045ff1e
     - [Flight rules for Git](https://github.com/k88hudson/git-flight-rules?tab=readme-ov-file#i-want-to-find-a-string-in-any-commit). Reference manual on *what to do when things go wrong*.
+    - [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/). *A specification for adding human and machine readable meaning to commit messages* 
+
 
 !!! screwdriver-wrench "Setup"
 
