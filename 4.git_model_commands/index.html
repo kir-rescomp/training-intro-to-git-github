@@ -1,0 +1,1769 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="The Kennedy Institute of Rheumatology, NDORMS, University of Oxford">
+      
+      
+        <link rel="canonical" href="https://kir-rescomp.github.io/training-intro-to-git-github/4.git_model_commands/">
+      
+      
+        <link rel="prev" href="../3.setting_up_git/">
+      
+      
+        <link rel="next" href="../5.from_git_to_github/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../images/kir_standalone_logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>4. Git Concepts, Data Model and Commands - Introduction to Git and Github</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,300i,400,400i,700,700i%7CInconsolata:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Mukta";--md-code-font:"Inconsolata"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../stylesheets/catalogue-return-button.css">
+    
+      <link rel="stylesheet" href="../stylesheets/side_bar_menu.css">
+    
+      <link rel="stylesheet" href="../stylesheets/adjust_grid_gaps.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#4-git-concepts-data-model-and-commands" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Introduction to Git and Github" class="md-header__button md-logo" aria-label="Introduction to Git and Github" data-md-component="logo">
+      
+  <img src="../images/kir_oxford_combined_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Introduction to Git and Github
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              4. Git Concepts, Data Model and Commands
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="indigo" aria-label="Switch to system preference" type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/kir-rescomp/training-intro-to-git-github" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    kir-rescomp/training-intro-to-git-github
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Introduction to Git and Github" class="md-nav__button md-logo" aria-label="Introduction to Git and Github" data-md-component="logo">
+      
+  <img src="../images/kir_oxford_combined_logo.png" alt="logo">
+
+    </a>
+    Introduction to Git and Github
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/kir-rescomp/training-intro-to-git-github" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    kir-rescomp/training-intro-to-git-github
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.what_is_versioncontrol/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Version Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2.intro_to_git/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Introduction to Git
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3.setting_up_git/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Setting up Git
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Git Concepts, Data Model and Commands
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Git Concepts, Data Model and Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-git-init-starting-a-new-experiment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. git init - Starting a new experiment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-just-happened-the-git-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What just happened? The .git directory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-essential-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating essential files
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-git-status-checking-the-lab-bench" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. git status — Checking the lab bench
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-git-add-staging-files-for-the-record" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. git add — Staging files for the record
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-git-commit-recording-the-experiment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. git commit — Recording the experiment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-git-branch-designing-new-experiments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. git branch — Designing new experiments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-git-status-git-add-and-git-commit-again" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. git status, git add, and git commit again
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-git-log-reviewing-experimental-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. git log — Reviewing experimental history
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-git-checkout-switching-branches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. git checkout — Switching branches
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-git-merge-combining-branches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. git merge — Combining branches
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-git-rebase-keeping-history-tidy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. git rebase — Keeping history tidy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-git-stash-pausing-unfinished-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. git stash — Pausing unfinished work
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-git-reset-undoing-a-mistake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. git reset — Undoing a mistake
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Questions
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5.from_git_to_github/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. From Local to Collaborative — GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6.conflicts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Resolving Merge Conflicts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7.licensing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Licensing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8.git_quiz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Git Quiz
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10">
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Supplementary
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Supplementary
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../supplementary/1.github_actions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GitHub Actions — Automated Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../supplementary/2.forking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Forking — External Contributions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../supplementary/3.issues_and_bug_tracking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Issues — Tracking Bugs and Ideas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../supplementary/4.readme_documentation_citation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    README and Documentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../supplementary/5.releases_and_versioning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Releases and Versioning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../supplementary/6.real_world_scenarios/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Real-World Research Scenarios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../supplementary/7.git_workflow_diagram/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visualising Git Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-git-init-starting-a-new-experiment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. git init - Starting a new experiment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-just-happened-the-git-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What just happened? The .git directory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-essential-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating essential files
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-git-status-checking-the-lab-bench" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. git status — Checking the lab bench
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-git-add-staging-files-for-the-record" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. git add — Staging files for the record
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-git-commit-recording-the-experiment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. git commit — Recording the experiment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-git-branch-designing-new-experiments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. git branch — Designing new experiments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-git-status-git-add-and-git-commit-again" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. git status, git add, and git commit again
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-git-log-reviewing-experimental-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. git log — Reviewing experimental history
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-git-checkout-switching-branches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. git checkout — Switching branches
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-git-merge-combining-branches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. git merge — Combining branches
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-git-rebase-keeping-history-tidy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. git rebase — Keeping history tidy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-git-stash-pausing-unfinished-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. git stash — Pausing unfinished work
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-git-reset-undoing-a-mistake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. git reset — Undoing a mistake
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Questions
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/kir-rescomp/training-intro-to-git-github/edit/master/docs/4.git_model_commands.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/kir-rescomp/training-intro-to-git-github/raw/master/docs/4.git_model_commands.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"></path></svg>
+    </a>
+  
+
+
+<h1 id="4-git-concepts-data-model-and-commands"></h1><h1 align="center">4. Git Concepts, Data Model and Commands</h1><a class="headerlink" href="#4-git-concepts-data-model-and-commands" title="Permanent link">¶</a>
+<p align="center">
+    <a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/gitcommand_episode_logo.png" data-desc-position="bottom"><img src="../images/gitcommand_episode_logo.png" alt="drawing" width="250"></a>
+</p>
+
+<h2 align="center">Version Control for Cell Clusters — A Git Journey in the Lab</h2>
+
+<p>Dr. X is a computational biologist working on a new single-cell RNA sequencing (scRNA-seq) pipeline.
+Like most data scientists, their workflow involves constant tweaking: preprocessing, quality control, normalization, clustering, and visualization.</p>
+<p>They are tired of lost scripts, mysterious file versions like <code>clustering_final_FINAL.R</code>, and overwritten notebooks.</p>
+<p>So, they decided to version-control their pipeline properly using <strong>Git</strong></p>
+<h3 id="1-git-init-starting-a-new-experiment">1. <code>git init</code> - Starting a new experiment<a class="headerlink" href="#1-git-init-starting-a-new-experiment" title="Permanent link">¶</a></h3>
+<p>They begin their project as they would a new experiment — setting up a clean workspace.</p>
+<div class="admonition terminal">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mkdir<span class="w"> </span>CellClusterFlow
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>CellClusterFlow
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git<span class="w"> </span>init
+</span></code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Output</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Initialized<span class="w"> </span>empty<span class="w"> </span>Git<span class="w"> </span>repository<span class="w"> </span><span class="k">in</span><span class="w"> </span>/path/to/CellClusterFlow/.git/
+</span></code></pre></div>
+</div>
+</div>
+<p>This initialises an empty Git repository, like labeling an empty freezer box before adding samples.
+Every change from here on will be tracked.</p>
+<h3 id="what-just-happened-the-git-directory">What just happened? The <code>.git</code> directory<a class="headerlink" href="#what-just-happened-the-git-directory" title="Permanent link">¶</a></h3>
+<p>The <code>git init</code> command created a hidden <code>.git</code> directory — the heart of your repository.</p>
+<div class="admonition terminal">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ls<span class="w"> </span>-la
+</span></code></pre></div>
+<p><strong>Output:</strong>
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>drwxr-xr-x  .git/
+</span></code></pre></div><p></p>
+<ul>
+<li>This <code>.git</code> folder is Git's "lab notebook" — it contains:</li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>.git/
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>├──<span class="w"> </span>HEAD<span class="w">              </span><span class="c1"># Points to current branch</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>├──<span class="w"> </span>config<span class="w">            </span><span class="c1"># Repository settings</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>├──<span class="w"> </span>description<span class="w">       </span><span class="c1"># Repository description (rarely used)</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>├──<span class="w"> </span>branches/<span class="w">         </span><span class="c1"># (deprecated, legacy Git)</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>├──<span class="w"> </span>hooks/<span class="w">            </span><span class="c1"># Scripts triggered by Git events</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>├──<span class="w"> </span>info/<span class="w">             </span><span class="c1"># Additional repository information (excludes, attributes)</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>├──<span class="w"> </span>objects/<span class="w">          </span><span class="c1"># Database of all file versions (commits, trees, blobs)</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>└──<span class="w"> </span>refs/<span class="w">             </span><span class="c1"># Pointers to commits (branches, tags)</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span>├──<span class="w"> </span>heads/<span class="w">        </span><span class="c1"># Local branches</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">    </span>└──<span class="w"> </span>tags/<span class="w">         </span><span class="c1"># Version tags</span>
+</span></code></pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Never delete <code>.git</code>!</p>
+<p>Deleting this folder erases <strong>all</strong> version history. Your files remain, but Git forgets everything — like burning your lab notebook while keeping only today's samples.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Checking if a directory is a Git repository</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="w">    </span><span class="c1"># If .git exists, you're in a Git repo</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span>ls<span class="w"> </span>-la<span class="w"> </span>.git
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="c1"># Or use Git itself with git status command which we will cover next</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="c1"># If not a repo: "fatal: not a git repository"</span>
+</span></code></pre></div>
+</div>
+<h3 id="creating-essential-files">Creating essential files<a class="headerlink" href="#creating-essential-files" title="Permanent link">¶</a></h3>
+<p>Dr. X sets up the initial project structure:</p>
+<div class="admonition terminal-2">
+<p class="admonition-title">Create a mock file-set</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>touch<span class="w"> </span>README.md<span class="w"> </span>LICENSE<span class="w"> </span>data_preprocessing.py<span class="w"> </span>qc_filtering.py<span class="w"> </span>clustering.R<span class="w"> </span>visualization.ipynb
+</span></code></pre></div>
+</div>
+<p><strong>Files created:</strong>
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>CellClusterFlow/
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>├── .git/                    # Git's database (hidden)
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>├── README.md                # Project documentation
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>├── LICENSE                  # Usage terms
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>├── data_preprocessing.py    # Data loading and cleaning
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>├── qc_filtering.py          # Quality control filters
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>├── clustering.R             # Clustering algorithms
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>└── visualization.ipynb      # Plotting and figures
+</span></code></pre></div><p></p>
+<p>At this point, Git <strong>knows</strong> these files exist (they're in the working directory), but isn't <strong>tracking</strong> them yet. </p>
+<p>That's what <code>git add</code> will do next.
+</p><pre class="mermaid"><code>flowchart LR
+  A[Empty directory] --&gt;|git init| B["Repository with .git/ folder
+  (Git's brain)"]
+  B --&gt;|create files| C["Working directory with files
+  (untracked)"]
+
+  style A fill:#f0f0f0,stroke:#333
+  style B fill:#e6f7ff,stroke:#1890ff,stroke-width:3px
+  style C fill:#fff7e6,stroke:#fa8c16</code></pre><p></p>
+<div class="admonition info">
+<p class="admonition-title">Working directory vs Repository</p>
+<ul>
+<li><strong>Working directory</strong>: The files you can see and edit</li>
+<li><strong>Repository</strong> (<code>.git/</code>): Git's internal database of all versions</li>
+</ul>
+<p>Think of it like:
+- <strong>Working directory</strong> = Your lab bench (current experiment)
+- <strong>Repository</strong> = Your archived lab notebooks (all past experiments)</p>
+</div>
+<h3 id="2-git-status-checking-the-lab-bench">2. <code>git status</code> — Checking the lab bench<a class="headerlink" href="#2-git-status-checking-the-lab-bench" title="Permanent link">¶</a></h3>
+<p>Just like checking which samples are unprocessed, they inspects their project’s state.</p>
+<div class="admonition terminal">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>git<span class="w"> </span>status
+</span></code></pre></div>
+<details class="success">
+<summary>Output</summary>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>On<span class="w"> </span>branch<span class="w"> </span>main
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>No<span class="w"> </span>commits<span class="w"> </span>yet
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>Untracked<span class="w"> </span>files:
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">  </span><span class="o">(</span>use<span class="w"> </span><span class="s2">"git add &lt;file&gt;..."</span><span class="w"> </span>to<span class="w"> </span>include<span class="w"> </span><span class="k">in</span><span class="w"> </span>what<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>committed<span class="o">)</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">    </span>LICENSE
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">    </span>README.md
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">    </span>clustering.R
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">    </span>data_preprocessing.py
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="w">    </span>qc_filtering.py
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="w">    </span>visualization.ipynb
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>nothing<span class="w"> </span>added<span class="w"> </span>to<span class="w"> </span>commit<span class="w"> </span>but<span class="w"> </span>untracked<span class="w"> </span>files<span class="w"> </span>present<span class="w"> </span><span class="o">(</span>use<span class="w"> </span><span class="s2">"git add"</span><span class="w"> </span>to<span class="w"> </span>track<span class="o">)</span>
+</span></code></pre></div>
+</details>
+</div>
+<p>Git reports untracked files — nothing is committed yet.
+This command should become a habit; they run it before almost every operation.</p>
+<pre class="mermaid"><code>flowchart LR
+  WD["`Working Directory
+  (modified/untracked files)`"] --&gt; IDX[Index]
+  IDX --&gt; HEAD["`HEAD
+  (committed snapshot)`"]
+  style WD fill:#fffbe6,stroke:#333
+  style IDX fill:#e6f7ff,stroke:#333
+  style HEAD fill:#e6ffe6,stroke:#333</code></pre>
+<h3 id="3-git-add-staging-files-for-the-record">3. <code>git add</code> — Staging files for the record<a class="headerlink" href="#3-git-add-staging-files-for-the-record" title="Permanent link">¶</a></h3>
+<p>Like labeling tubes before freezing them, they stages files to prepare for a permanent record.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>git<span class="w"> </span>add<span class="w"> </span>README.md<span class="w"> </span>LICENSE
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>git<span class="w"> </span>add<span class="w"> </span>.
+</span></code></pre></div>
+<p>This moves files from the working directory into the staging area, also known as the index.
+Only staged files will be committed.</p>
+<h3 id="4-git-commit-recording-the-experiment">4. <code>git commit</code> — Recording the experiment<a class="headerlink" href="#4-git-commit-recording-the-experiment" title="Permanent link">¶</a></h3>
+<p>They  capture their first snapshot.</p>
+<div class="admonition terminal">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"Initial commit: basic pipeline structure"</span>
+</span></code></pre></div>
+<details class="success">
+<summary>Output</summary>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="o">[</span>main<span class="w"> </span><span class="o">(</span>root-commit<span class="o">)</span><span class="w"> </span>40eb049<span class="o">]</span><span class="w"> </span>Initial<span class="w"> </span>commit:<span class="w"> </span>basic<span class="w"> </span>pipeline<span class="w"> </span>structure
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w"> </span><span class="m">6</span><span class="w"> </span>files<span class="w"> </span>changed,<span class="w"> </span><span class="m">0</span><span class="w"> </span>insertions<span class="o">(</span>+<span class="o">)</span>,<span class="w"> </span><span class="m">0</span><span class="w"> </span>deletions<span class="o">(</span>-<span class="o">)</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w"> </span>create<span class="w"> </span>mode<span class="w"> </span><span class="m">100644</span><span class="w"> </span>LICENSE
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w"> </span>create<span class="w"> </span>mode<span class="w"> </span><span class="m">100644</span><span class="w"> </span>README.md
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w"> </span>create<span class="w"> </span>mode<span class="w"> </span><span class="m">100644</span><span class="w"> </span>clustering.R
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w"> </span>create<span class="w"> </span>mode<span class="w"> </span><span class="m">100644</span><span class="w"> </span>data_preprocessing.py
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w"> </span>create<span class="w"> </span>mode<span class="w"> </span><span class="m">100644</span><span class="w"> </span>qc_filtering.py
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w"> </span>create<span class="w"> </span>mode<span class="w"> </span><span class="m">100644</span><span class="w"> </span>visualization.ipynb
+</span></code></pre></div>
+</details>
+<p>This is their first “frozen sample” — They can always revert to it later.</p>
+<p></p><center>
+<pre class="mermaid"><code>%%{init: {'theme':'base'}}%%
+gitGraph
+  commit id: "Initial commit"</code></pre>
+</center><p></p>
+</div>
+<h3 id="5-git-branch-designing-new-experiments">5. <code>git branch</code> — Designing new experiments<a class="headerlink" href="#5-git-branch-designing-new-experiments" title="Permanent link">¶</a></h3>
+<p>To test a new normalisation method, they create a new branch — a safe environment to experiment without contaminating their main results.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>git<span class="w"> </span>branch<span class="w"> </span>normalisation
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>git<span class="w"> </span>checkout<span class="w"> </span>normalisation
+</span></code></pre></div>
+<p>Branches in Git are like running parallel experiments in separate tubes.
+Each can evolve independently until they decide to merge the results.</p>
+<center>
+<pre class="mermaid"><code>%%{init: {'theme': 'base'}}%%
+gitGraph
+  commit id: "A"
+  branch normalization
+  checkout normalization
+  commit id: "B"</code></pre>
+</center>
+
+<h3 id="6-git-status-git-add-and-git-commit-again">6. <code>git status</code>, <code>git add</code>, and <code>git commit</code> again<a class="headerlink" href="#6-git-status-git-add-and-git-commit-again" title="Permanent link">¶</a></h3>
+<p>After modifying <strong>data_preprocessing.py</strong> to include log-normalization, they check the progress:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>git<span class="w"> </span>status
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>git<span class="w"> </span>add<span class="w"> </span>data_preprocessing.py
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"Add log-normalization step for scRNA-seq data"</span>
+</span></code></pre></div>
+<p>Now, their new branch contains a reproducible change.</p>
+<center>
+<pre class="mermaid"><code>%%{init: {'theme': 'base'}}%%
+gitGraph
+  commit id: "A"
+  branch normalization
+  checkout normalization
+  commit id: "Add log-normalization"</code></pre>
+</center>
+
+<h3 id="7-git-log-reviewing-experimental-history">7. <code>git log</code> — Reviewing experimental history<a class="headerlink" href="#7-git-log-reviewing-experimental-history" title="Permanent link">¶</a></h3>
+<p>Every scientist keeps lab notes; Git is no different.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w"> </span>--graph<span class="w"> </span>--decorate
+</span></code></pre></div>
+<p>It shows a tidy, timestamped list of commits — their computational “lab notebook”.</p>
+<center>
+<pre class="mermaid"><code>%%{init: {'theme': 'base'}}%%
+gitGraph
+  commit id: "Initial commit"
+  commit id: "Add log-normalization"</code></pre>
+</center>
+
+<div class="admonition circle-info">
+<p class="admonition-title">Useful <code>git log</code> variations</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1"># Compact one-line format</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>git<span class="w"> </span>log<span class="w"> </span>--oneline
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="c1"># Show last 5 commits</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>git<span class="w"> </span>log<span class="w"> </span>-5
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="c1"># Show changes in each commit</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>git<span class="w"> </span>log<span class="w"> </span>-p
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="c1"># Show commits by specific author</span>
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>git<span class="w"> </span>log<span class="w"> </span>--author<span class="o">=</span><span class="s2">"Dr. X"</span>
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="c1"># Show commits in date range</span>
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>git<span class="w"> </span>log<span class="w"> </span>--since<span class="o">=</span><span class="s2">"2 weeks ago"</span>
+</span></code></pre></div>
+</div>
+<h3 id="8-git-checkout-switching-branches">8. <code>git checkout</code> — Switching branches<a class="headerlink" href="#8-git-checkout-switching-branches" title="Permanent link">¶</a></h3>
+<p>To review another experiment, Dr. X switches branches. ( make sure the current branch is <code>normalisation</code> )</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>git<span class="w"> </span>branch
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">  </span>main
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>*<span class="w"> </span>normalisation
+</span></code></pre></div>
+<ul>
+<li>This <code>*</code> indicates a the current branch</li>
+</ul>
+<p>Create a new branch ( branch namem is <code>clustering-tweaks</code> and check it out one line)</p>
+<div class="admonition terminal">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># Switch back to main</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>git<span class="w"> </span>checkout<span class="w"> </span>main
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="c1"># Create AND switch to a new branch in one command</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>clustering-tweaks
+</span></code></pre></div>
+</div>
+<p>This is like changing which dataset or parameter set they are exploring — safely isolated.</p>
+<center>
+<pre class="mermaid"><code>%%{init: {'theme': 'base'}}%%
+gitGraph
+  commit id: "A"
+  branch clustering-tweaks
+  checkout clustering-tweaks
+  commit id: "B"</code></pre>
+</center>
+
+<div class="admonition warning">
+<p class="admonition-title">Uncommitted changes</p>
+<p>If you have uncommitted changes, Git may prevent you from switching branches:
+    error: Your local changes to the following files would be overwritten by checkout</p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>Commit your changes: <code>git commit -m "Work in progress"</code></li>
+<li>Stash your changes: <code>git stash</code> (covered later)</li>
+<li>Discard your changes: <code>git checkout -- &lt;file&gt;</code> (be careful!)</li>
+</ol>
+</div>
+<h3 id="9-git-merge-combining-branches">9. git merge — Combining branches<a class="headerlink" href="#9-git-merge-combining-branches" title="Permanent link">¶</a></h3>
+<p>Once testing is complete, Dr. X merges their branch back into main.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># Switch to the branch you want to merge INTO</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>git<span class="w"> </span>checkout<span class="w"> </span>main
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="c1"># Merge the feature branch</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>git<span class="w"> </span>merge<span class="w"> </span>normalisation
+</span></code></pre></div>
+<h3 id="10-git-rebase-keeping-history-tidy">10. <code>git rebase</code> — Keeping history tidy<a class="headerlink" href="#10-git-rebase-keeping-history-tidy" title="Permanent link">¶</a></h3>
+<p>After a few days, <code>main</code> has moved ahead.
+Rather than <code>merge</code> and <strong>create</strong> messy branches, Dr.X  rebases their branch to make history look clean.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>git<span class="w"> </span>checkout<span class="w"> </span>normalisation
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>git<span class="w"> </span>rebase<span class="w"> </span>main
+</span></code></pre></div>
+<p>This reapplies their commits on top of the latest base — as if they had started from the most recent code.</p>
+<center>
+<pre class="mermaid"><code>flowchart LR
+  A((A)) --&gt; B((B))
+  B --&gt; C((C))
+  B --&gt; D((D))
+  D -.rebase.-&gt; C'((C'))
+  style C' fill:#fffbe6,stroke:#f90</code></pre>
+<small>Before <code>rebase</code></small>
+</center>
+
+<center>
+<pre class="mermaid"><code>%%{init: {'theme': 'base'}}%%
+gitGraph
+  commit id: "A"
+  commit id: "B"
+  branch normalization
+  checkout normalization
+  commit id: "C"
+  checkout main
+  commit id: "D"
+  checkout normalization
+  merge main</code></pre>
+<small>After <code>rebase</code></small>
+</center>
+
+<div class="admonition warning">
+<p class="admonition-title">Golden rule of rebase</p>
+<p>Never rebase commits that have been pushed to a shared repository!
+Rebase rewrites history, which can cause problems for collaborators.</p>
+<ul>
+<li><strong>Safe</strong>: Rebase your local, unpushed commits</li>
+<li><strong>Unsafe</strong>: Rebase commits others are building on</li>
+</ul>
+</div>
+<h3 id="11-git-stash-pausing-unfinished-work">11. <code>git stash</code> — Pausing unfinished work<a class="headerlink" href="#11-git-stash-pausing-unfinished-work" title="Permanent link">¶</a></h3>
+<p>Midway through plotting, Dr. X gets a Slack message: “Can you quickly check that clustering bug?”
+Their notebook isn’t ready to commit, but they don't want to lose their changes.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>git<span class="w"> </span>stash
+</span></code></pre></div>
+<p>Their work is saved safely on the “stash stack,” and their working directory is clean again.</p>
+<p>After debugging, they brings their changes back:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>git<span class="w"> </span>stash<span class="w"> </span>pop
+</span></code></pre></div>
+<center>
+<pre class="mermaid"><code>flowchart LR
+  WD[Modified files] --&gt;|git stash| STASH["stash@{0}"]
+  STASH --&gt;|git stash pop| WD</code></pre>
+</center>
+
+<div class="admonition circle-info">
+<p class="admonition-title">Useful <code>stash</code> commands</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1"># List all stashes</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>git<span class="w"> </span>stash<span class="w"> </span>list
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="c1"># Apply stash without removing it</span>
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>git<span class="w"> </span>stash<span class="w"> </span>apply
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="c1"># Apply a specific stash</span>
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>git<span class="w"> </span>stash<span class="w"> </span>apply<span class="w"> </span>stash@<span class="o">{</span><span class="m">1</span><span class="o">}</span>
+</span><span id="__span-24-9"><a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a>
+</span><span id="__span-24-10"><a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a><span class="c1"># Create a named stash</span>
+</span><span id="__span-24-11"><a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a>git<span class="w"> </span>stash<span class="w"> </span>save<span class="w"> </span><span class="s2">"WIP: adding UMAP plots"</span>
+</span><span id="__span-24-12"><a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a>
+</span><span id="__span-24-13"><a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a><span class="c1"># Delete all stashes</span>
+</span><span id="__span-24-14"><a id="__codelineno-24-14" name="__codelineno-24-14" href="#__codelineno-24-14"></a>git<span class="w"> </span>stash<span class="w"> </span>clear
+</span></code></pre></div>
+</div>
+<h3 id="12-git-reset-undoing-a-mistake">12. <code>git reset</code> — Undoing a mistake<a class="headerlink" href="#12-git-reset-undoing-a-mistake" title="Permanent link">¶</a></h3>
+<p>Oops — Dr. X accidentally committed a large <strong>matrix.mtx</strong> test file.</p>
+<p>There are three types of reset:</p>
+<div class="admonition terminal-2">
+<p class="admonition-title">`--soft - : Undo commit, keep changes staged</p>
+<p><strong>Use when:</strong> You want to recommit with a better message or add more files.
+</p><div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="c1"># Undo last commit, keep changes in staging area</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>git<span class="w"> </span>reset<span class="w"> </span>--soft<span class="w"> </span>HEAD^
+</span></code></pre></div><p></p>
+</div>
+<div class="admonition terminal-2">
+<p class="admonition-title"><code>--mixed</code> (default): Undo commit, unstage changes</p>
+<p><strong>Use when:</strong> You want to redo the commit but need to modify files first.
+</p><div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="c1"># Undo last commit, move changes back to working directory</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>git<span class="w"> </span>reset<span class="w"> </span>HEAD^
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="c1"># or</span>
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>git<span class="w"> </span>reset<span class="w"> </span>--mixed<span class="w"> </span>HEAD^
+</span></code></pre></div><p></p>
+</div>
+<div class="admonition terminal-2">
+<p class="admonition-title"><code>--hard</code>: Undo commit, delete changes</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="c1"># Undo last commit and DELETE all changes (be careful!)</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>git<span class="w"> </span>reset<span class="w"> </span>--hard<span class="w"> </span>HEAD^
+</span></code></pre></div>
+</div>
+<h2 id="common-questions">Common Questions<a class="headerlink" href="#common-questions" title="Permanent link">¶</a></h2>
+<details class="question">
+<summary>Why do I need the staging area? Can't I just commit directly?</summary>
+<p>The staging area gives you control! You can:</p>
+<ul>
+<li>Commit only related changes together</li>
+<li>Review changes before committing</li>
+<li>Keep work-in-progress unstaged</li>
+<li>Create clean, logical commit history</li>
+</ul>
+<p>Many Git tools allow skipping staging (<code>git commit -a</code>), but understanding it makes you a better Git user.</p>
+</details>
+<details class="question">
+<summary>What's the difference between Git and GitHub?</summary>
+<ul>
+<li><strong>Git</strong> = Version control software (runs on your computer)</li>
+<li><strong>GitHub</strong> = Website for hosting Git repositories (in the cloud)</li>
+</ul>
+<p>Think of it like:
+- Git = Microsoft Word
+- GitHub = Google Docs</p>
+<p>We'll cover GitHub in detail later!</p>
+</details>
+<details class="question">
+<summary>Can I use Git for non-code projects?</summary>
+<p>Absolutely! Git works great for:</p>
+<ul>
+<li>Documentation (Markdown, LaTeX)</li>
+<li>Design files (if text-based)</li>
+<li>Configuration files</li>
+<li>Writing (books, articles)</li>
+<li>Any text files that change over time</li>
+</ul>
+</details>
+<details class="question">
+<summary>How much space does Git use?</summary>
+<p>Git is surprisingly efficient! It:</p>
+<ul>
+<li>Compresses data</li>
+<li>Stores only changes (internally)</li>
+<li>Removes duplicates</li>
+</ul>
+<p>A repo with years of history might only be a few MB.</p>
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../3.setting_up_git/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 3. Setting up Git">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                3. Setting up Git
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../5.from_git_to_github/" class="md-footer__link md-footer__link--next" aria-label="Next: 5. From Local to Collaborative — GitHub">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                5. From Local to Collaborative — GitHub
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      KIR "Introduction to Git and Github" is licensed under a <a rel="noopener" target="_blank" href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU General Public License v3.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tracking", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "navigation.indexes", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.code.annotation", "content.action.edit", "content.action.view", "search.suggest", "search.highlight", "toc.follow"], "search": "../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
