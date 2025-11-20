@@ -139,3 +139,4 @@ extra_css:
   - stylesheets/extra.css
   - stylesheets/catalogue-return-button.css
   - stylesheets/side_bar_menu.css
+  - stylesheets/adjust_grid_gaps.css
