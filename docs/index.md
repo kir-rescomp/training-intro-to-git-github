@@ -19,6 +19,8 @@
     4. [Git Concepts, Data Model and Commands](./4.git_model_commands.md)
     5. [From Local Collaborative - Introduction to Github](./5.from_git_to_github.md)
     6. [Resolving Merge Conflicts](6.conflicts.md)
+    7. [Learn about Licensing](./7.licensing.md)
+    8. [Git Quiz](./8.git_quiz.md)
 
 
 
