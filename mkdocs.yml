@@ -45,8 +45,8 @@ theme:
   
   features:
     - navigation.tracking
-    - navigation.sections
-#   - navigation.expand
+#    - navigation.sections
+    - navigation.expand
     - navigation.top
     - navigation.footer
 #    - navigation.tabs
@@ -156,3 +156,13 @@ nav:
     - GH Tokens: credentials/3.tokens.md
 
   - Git Quiz: 8.git_quiz.md
+
+  - Supplementary: 
+    - Git Workflow & Cycle: supplementary/0.1.git_workflow_cycle.md
+    - Github Actions: supplementary/1.github_actions.md
+    - Forking: supplementary/2.forking.md
+    - Issues and Bug Tracking: supplementary/3.issues_and_bug_tracking.md
+    - Readme, Documentation and Citation: supplementary/4.readme_documentation_citation.md
+    - Releases and Versioning: supplementary/5.releases_and_versioning.md
+    - Real World Scenarios: supplementary/6.real_world_scenarios.md
+    - Github Workflow: supplementary/7.git_workflow_diagram.md
