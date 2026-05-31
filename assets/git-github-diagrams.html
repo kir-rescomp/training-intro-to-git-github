@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git & GitHub Workshop Diagrams</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .diagram-container {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .diagram-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 70px rgba(0,0,0,0.35);
+        }
+        
+        h1 {
+            color: white;
+            text-align: center;
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+        
+        .subtitle {
+            color: rgba(255,255,255,0.95);
+            text-align: center;
+            font-size: 1.4em;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+        
+        h2 {
+            color: #1a1a1a;
+            font-size: 2em;
+            margin-bottom: 30px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .description {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+            border-left: 5px solid #667eea;
+            border-radius: 12px;
+        }
+        
+        .description h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #667eea;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+        
+        .description ul {
+            margin: 0;
+            padding-left: 25px;
+        }
+        
+        .description li {
+            margin: 12px 0;
+            line-height: 1.7;
+            color: #2c3e50;
+        }
+        
+        .description strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .diagram-container {
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+            .diagram-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Git & GitHub Workshop</h1>
+        <div class="subtitle">Visual Guide to Version Control</div>
+
+        <!-- Diagram 1: Version Control Concept -->
+        <div class="diagram-container">
+            <h2>1. What is Version Control?</h2>
+            <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+                <!-- Without Version Control Section -->
+                <defs>
+                    <linearGradient id="redGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#ee5a6f;stop-opacity:1" />
+                    </linearGradient>
+                    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#51cf66;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#37b24d;stop-opacity:1" />
+                    </linearGradient>
+                    <filter id="shadow">
+                        <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.2"/>
+                    </filter>
+                </defs>
+                
+                <text x="250" y="35" font-size="22" font-weight="700" text-anchor="middle" fill="url(#redGrad)">❌ Without Version Control</text>
+                
+                <!-- Files scattered -->
+                <g transform="translate(70, 60)" filter="url(#shadow)">
+                    <rect x="0" y="0" width="120" height="90" fill="#ffffff" stroke="#e9ecef" stroke-width="3" rx="12"/>
+                    <text x="60" y="35" text-anchor="middle" font-size="28">📄</text>
+                    <text x="60" y="60" text-anchor="middle" font-size="12" fill="#495057" font-weight="600">Project_v1.txt</text>
+                    <text x="60" y="77" text-anchor="middle" font-size="10" fill="#868e96">March 1</text>
+                </g>
+                
+                <g transform="translate(210, 60)" filter="url(#shadow)">
+                    <rect x="0" y="0" width="120" height="90" fill="#ffffff" stroke="#e9ecef" stroke-width="3" rx="12"/>
+                    <text x="60" y="35" text-anchor="middle" font-size="28">📄</text>
+                    <text x="60" y="58" text-anchor="middle" font-size="11" fill="#495057" font-weight="600">Project_v2</text>
+                    <text x="60" y="72" text-anchor="middle" font-size="11" fill="#495057" font-weight="600">_final.txt</text>
+                    <text x="60" y="87" text-anchor="middle" font-size="10" fill="#868e96">March 5</text>
+                </g>
+                
+                <g transform="translate(350, 60)" filter="url(#shadow)">
+                    <rect x="0" y="0" width="120" height="90" fill="#ffffff" stroke="#e9ecef" stroke-width="3" rx="12"/>
+                    <text x="60" y="35" text-anchor="middle" font-size="28">📄</text>
+                    <text x="60" y="55" text-anchor="middle" font-size="10" fill="#495057" font-weight="600">Project_v2_final</text>
+                    <text x="60" y="68" text-anchor="middle" font-size="10" fill="#495057" font-weight="600">_FINAL.txt</text>
+                    <text x="60" y="87" text-anchor="middle" font-size="10" fill="#868e96">March 8</text>
+                </g>
+                
+                <!-- Confusion -->
+                <text x="250" y="185" text-anchor="middle" font-size="36">😵‍💫</text>
+                <text x="250" y="215" text-anchor="middle" font-size="13" fill="#e03131" font-weight="600">Confusing! Which is the latest?</text>
+
+                <!-- With Version Control Section -->
+                <text x="750" y="35" font-size="22" font-weight="700" text-anchor="middle" fill="url(#greenGrad)">✅ With Version Control</text>
+                
+                <!-- Timeline -->
+                <line x1="550" y1="110" x2="950" y2="110" stroke="#667eea" stroke-width="4" stroke-linecap="round"/>
+                
+                <!-- Version 1 -->
+                <circle cx="590" cy="110" r="20" fill="#667eea" filter="url(#shadow)"/>
+                <text x="590" y="117" text-anchor="middle" font-size="14" fill="white" font-weight="700">v1</text>
+                <text x="590" y="150" text-anchor="middle" font-size="12" fill="#495057" font-weight="600">Initial commit</text>
+                <text x="590" y="168" text-anchor="middle" font-size="10" fill="#868e96">March 1</text>
+                
+                <!-- Version 2 -->
+                <circle cx="750" cy="110" r="20" fill="#667eea" filter="url(#shadow)"/>
+                <text x="750" y="117" text-anchor="middle" font-size="14" fill="white" font-weight="700">v2</text>
+                <text x="750" y="150" text-anchor="middle" font-size="12" fill="#495057" font-weight="600">Added features</text>
+                <text x="750" y="168" text-anchor="middle" font-size="10" fill="#868e96">March 5</text>
+                
+                <!-- Version 3 -->
+                <circle cx="910" cy="110" r="20" fill="#51cf66" filter="url(#shadow)"/>
+                <text x="910" y="117" text-anchor="middle" font-size="14" fill="white" font-weight="700">v3</text>
+                <text x="910" y="150" text-anchor="middle" font-size="12" fill="#495057" font-weight="600">Fixed bugs</text>
+                <text x="910" y="168" text-anchor="middle" font-size="10" fill="#868e96">March 8</text>
+                <text x="910" y="185" text-anchor="middle" font-size="11" fill="#37b24d" font-weight="700">← Latest</text>
+                
+                <!-- Happy face -->
+                <text x="750" y="225" text-anchor="middle" font-size="36">😊</text>
+                <text x="750" y="255" text-anchor="middle" font-size="13" fill="#37b24d" font-weight="600">Clear history & easy tracking!</text>
+
+                <!-- Key Benefits Box -->
+                <rect x="70" y="300" width="860" height="180" fill="url(#greenGrad)" opacity="0.1" rx="16"/>
+                <rect x="70" y="300" width="860" height="180" fill="none" stroke="url(#greenGrad)" stroke-width="3" rx="16"/>
+                <text x="500" y="335" text-anchor="middle" font-size="20" font-weight="700" fill="#37b24d">🎯 Key Benefits of Version Control</text>
+                
+                <g transform="translate(110, 360)">
+                    <circle cx="0" cy="0" r="6" fill="#37b24d"/>
+                    <text x="20" y="5" font-size="15" fill="#2b8a3e"><tspan font-weight="700">Track Changes:</tspan> See who changed what and when</text>
+                </g>
+                
+                <g transform="translate(110, 395)">
+                    <circle cx="0" cy="0" r="6" fill="#37b24d"/>
+                    <text x="20" y="5" font-size="15" fill="#2b8a3e"><tspan font-weight="700">Revert Mistakes:</tspan> Go back to any previous version</text>
+                </g>
+                
+                <g transform="translate(110, 430)">
+                    <circle cx="0" cy="0" r="6" fill="#37b24d"/>
+                    <text x="20" y="5" font-size="15" fill="#2b8a3e"><tspan font-weight="700">Collaboration:</tspan> Multiple people can work together safely</text>
+                </g>
+                
+                <g transform="translate(530, 395)">
+                    <circle cx="0" cy="0" r="6" fill="#37b24d"/>
+                    <text x="20" y="5" font-size="15" fill="#2b8a3e"><tspan font-weight="700">Backup:</tspan> Your work is safely stored and distributed</text>
+                </g>
+            </svg>
+        </div>
+
+        <!-- Diagram 2: What is Git -->
+        <div class="diagram-container">
+            <h2>2. What is Git?</h2>
+            <svg viewBox="0 0 900 650" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#ff922b;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#fd7e14;stop-opacity:1" />
+                    </linearGradient>
+                    <linearGradient id="greenGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#51cf66;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#37b24d;stop-opacity:1" />
+                    </linearGradient>
+                    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#4c6ef5;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#364fc7;stop-opacity:1" />
+                    </linearGradient>
+                    <filter id="glow">
+                        <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                        <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+                
+                <!-- Git Logo -->
+                <text x="450" y="60" text-anchor="middle" font-size="48" font-weight="800" fill="#f03e2f">Git</text>
+                <text x="450" y="90" text-anchor="middle" font-size="16" fill="#868e96" font-weight="500">Distributed Version Control System</text>
+                
+                <!-- Working Directory -->
+                <g filter="url(#shadow)">
+                    <rect x="60" y="140" width="220" height="170" fill="#fff4e6" stroke="url(#orangeGrad)" stroke-width="4" rx="16"/>
+                    <text x="170" y="175" text-anchor="middle" font-size="18" font-weight="700" fill="#fd7e14">📁 Working Directory</text>
+                    <text x="170" y="200" text-anchor="middle" font-size="13" fill="#868e96">Your project files</text>
+                    
+                    <rect x="90" y="220" width="160" height="35" fill="#ffffff" stroke="#ced4da" stroke-width="2" rx="8"/>
+                    <text x="170" y="243" text-anchor="middle" font-size="13" fill="#495057" font-weight="500">index.html</text>
+                    
+                    <rect x="90" y="265" width="160" height="35" fill="#ffffff" stroke="#ced4da" stroke-width="2" rx="8"/>
+                    <text x="170" y="288" text-anchor="middle" font-size="13" fill="#495057" font-weight="500">script.js</text>
+                </g>
+                
+                <!-- Arrow 1: git add -->
+                <defs>
+                    <marker id="arrowgreen2" markerWidth="12" markerHeight="12" refX="10" refY="4" orient="auto">
+                        <path d="M0,0 L0,8 L10,4 z" fill="#51cf66"/>
+                    </marker>
+                </defs>
+                <path d="M 280 225 L 370 225" stroke="#51cf66" stroke-width="5" fill="none" marker-end="url(#arrowgreen2)" stroke-linecap="round"/>
+                <rect x="285" y="195" width="80" height="28" fill="#51cf66" rx="14"/>
+                <text x="325" y="213" text-anchor="middle" font-size="14" font-weight="700" fill="white">git add</text>
+                
+                <!-- Staging Area -->
+                <g filter="url(#shadow)">
+                    <rect x="380" y="140" width="220" height="170" fill="#d3f9d8" stroke="url(#greenGrad2)" stroke-width="4" rx="16"/>
+                    <text x="490" y="175" text-anchor="middle" font-size="18" font-weight="700" fill="#37b24d">📋 Staging Area</text>
+                    <text x="490" y="200" text-anchor="middle" font-size="13" fill="#868e96">Files ready to commit</text>
+                    
+                    <rect x="410" y="220" width="160" height="35" fill="#b2f2bb" stroke="#51cf66" stroke-width="2" rx="8"/>
+                    <text x="490" y="243" text-anchor="middle" font-size="13" fill="#2b8a3e" font-weight="600">✓ index.html</text>
+                    
+                    <rect x="410" y="265" width="160" height="35" fill="#b2f2bb" stroke="#51cf66" stroke-width="2" rx="8"/>
+                    <text x="490" y="288" text-anchor="middle" font-size="13" fill="#2b8a3e" font-weight="600">✓ script.js</text>
+                </g>
+                
+                <!-- Arrow 2: git commit -->
+                <defs>
+                    <marker id="arrowblue2" markerWidth="12" markerHeight="12" refX="4" refY="10" orient="auto">
+                        <path d="M0,0 L8,0 L4,10 z" fill="#4c6ef5"/>
+                    </marker>
+                </defs>
+                <path d="M 490 310 L 490 390" stroke="#4c6ef5" stroke-width="5" fill="none" marker-end="url(#arrowblue2)" stroke-linecap="round"/>
+                <rect x="450" y="330" width="105" height="28" fill="#4c6ef5" rx="14"/>
+                <text x="502" y="348" text-anchor="middle" font-size="14" font-weight="700" fill="white">git commit</text>
+                
+                <!-- Repository -->
+                <g filter="url(#shadow)">
+                    <rect x="320" y="400" width="340" height="200" fill="#dbe4ff" stroke="url(#blueGrad)" stroke-width="4" rx="16"/>
+                    <text x="490" y="435" text-anchor="middle" font-size="18" font-weight="700" fill="#364fc7">🗄️ Local Repository</text>
+                    <text x="490" y="460" text-anchor="middle" font-size="13" fill="#868e96">Complete project history</text>
+                    
+                    <!-- Commit Timeline -->
+                    <g transform="translate(350, 490)">
+                        <circle cx="40" cy="25" r="16" fill="#748ffc" stroke="#4c6ef5" stroke-width="3" filter="url(#glow)"/>
+                        <text x="40" y="31" text-anchor="middle" font-size="12" fill="white" font-weight="700">C1</text>
+                        <text x="40" y="55" text-anchor="middle" font-size="11" fill="#495057" font-weight="600">Initial</text>
+                        
+                        <line x1="56" y1="25" x2="104" y2="25" stroke="#4c6ef5" stroke-width="3" stroke-linecap="round"/>
+                        
+                        <circle cx="120" cy="25" r="16" fill="#748ffc" stroke="#4c6ef5" stroke-width="3" filter="url(#glow)"/>
+                        <text x="120" y="31" text-anchor="middle" font-size="12" fill="white" font-weight="700">C2</text>
+                        <text x="120" y="55" text-anchor="middle" font-size="11" fill="#495057" font-weight="600">Features</text>
+                        
+                        <line x1="136" y1="25" x2="184" y2="25" stroke="#4c6ef5" stroke-width="3" stroke-linecap="round"/>
+                        
+                        <circle cx="200" cy="25" r="16" fill="#4c6ef5" stroke="#364fc7" stroke-width="3" filter="url(#glow)"/>
+                        <text x="200" y="31" text-anchor="middle" font-size="12" fill="white" font-weight="700">C3</text>
+                        <text x="200" y="55" text-anchor="middle" font-size="11" fill="#364fc7" font-weight="700">Latest</text>
+                    </g>
+                </g>
+                
+                <!-- Key Features Footer -->
+                <rect x="60" y="620" width="780" height="20" fill="none"/>
+                <text x="450" y="635" text-anchor="middle" font-size="14" fill="#495057" font-weight="500">
+                    <tspan font-weight="700" fill="#667eea">Git is:</tspan> Fast • Distributed • Free & Open Source • Works Offline • Powerful Branching
+                </text>
+            </svg>
+            
+            <div class="description">
+                <h3>Understanding the Git Workflow</h3>
+                <ul>
+                    <li><strong>Working Directory:</strong> Where you edit and modify your files</li>
+                    <li><strong>Staging Area (Index):</strong> A preparation zone where you select which changes to include in the next commit</li>
+                    <li><strong>Local Repository:</strong> Where Git permanently stores committed snapshots of your project</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Diagram 3: How GitHub Works -->
+        <div class="diagram-container">
+            <h2>3. How GitHub Works</h2>
+            <svg viewBox="0 0 1100 850" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#9775fa;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#7950f2;stop-opacity:1" />
+                    </linearGradient>
+                    <marker id="arrowpush2" markerWidth="14" markerHeight="14" refX="12" refY="5" orient="auto">
+                        <path d="M0,0 L0,10 L12,5 z" fill="#51cf66"/>
+                    </marker>
+                    <marker id="arrowpull2" markerWidth="14" markerHeight="14" refX="12" refY="5" orient="auto">
+                        <path d="M0,0 L0,10 L12,5 z" fill="#9775fa"/>
+                    </marker>
+                    <marker id="arrowclone2" markerWidth="12" markerHeight="12" refX="10" refY="4" orient="auto">
+                        <path d="M0,0 L0,8 L10,4 z" fill="#ff922b"/>
+                    </marker>
+                </defs>
+                
+                <!-- GitHub Cloud -->
+                <g filter="url(#shadow)">
+                    <ellipse cx="550" cy="110" rx="220" ry="95" fill="#f8f9fa" stroke="#24292e" stroke-width="4"/>
+                    <text x="550" y="85" text-anchor="middle" font-size="32" font-weight="800" fill="#24292e">GitHub</text>
+                    <text x="550" y="115" text-anchor="middle" font-size="15" fill="#868e96" font-weight="500">(Remote Repository)</text>
+                    
+                    <!-- Main Branch Badge -->
+                    <rect x="430" y="135" width="240" height="45" fill="#2da44e" stroke="#1f883d" stroke-width="3" rx="10" filter="url(#shadow)"/>
+                    <text x="550" y="163" text-anchor="middle" font-size="16" fill="white" font-weight="700">🌿 main branch</text>
+                </g>
+                
+                <!-- Developer 1 -->
+                <g transform="translate(80, 280)">
+                    <rect x="0" y="0" width="280" height="300" fill="#fff9e6" stroke="#ff922b" stroke-width="4" rx="16" filter="url(#shadow)"/>
+                    <text x="140" y="35" text-anchor="middle" font-size="18" font-weight="700" fill="#fd7e14">👩‍💻 Developer 1</text>
+                    
+                    <!-- Local Repo -->
+                    <rect x="20" y="60" width="240" height="90" fill="#dbe4ff" stroke="#4c6ef5" stroke-width="3" rx="12"/>
+                    <text x="140" y="85" text-anchor="middle" font-size="14" font-weight="700" fill="#364fc7">Local Repository</text>
+                    <g transform="translate(50, 105)">
+                        <circle cx="0" cy="0" r="12" fill="#4c6ef5"/>
+                        <text x="0" y="4" text-anchor="middle" font-size="10" fill="white" font-weight="700">C1</text>
+                        <line x1="12" y1="0" x2="48" y2="0" stroke="#4c6ef5" stroke-width="2"/>
+                        <circle cx="60" cy="0" r="12" fill="#4c6ef5"/>
+                        <text x="60" y="4" text-anchor="middle" font-size="10" fill="white" font-weight="700">C2</text>
+                        <line x1="72" y1="0" x2="108" y2="0" stroke="#4c6ef5" stroke-width="2"/>
+                        <circle cx="120" cy="0" r="12" fill="#748ffc"/>
+                        <text x="120" y="4" text-anchor="middle" font-size="10" fill="white" font-weight="700">C3</text>
+                    </g>
+                    
+                    <!-- Working Directory -->
+                    <rect x="20" y="170" width="240" height="70" fill="#fff4e6" stroke="#ff922b" stroke-width="3" rx="12"/>
+                    <text x="140" y="195" text-anchor="middle" font-size="14" font-weight="700" fill="#fd7e14">Working Directory</text>
+                    <text x="140" y="220" text-anchor="middle" font-size="12" fill="#495057">📝 Editing files...</text>
+                    
+                    <!-- Commands -->
+                    <rect x="50" y="260" width="180" height="25" fill="#51cf66" rx="12"/>
+                    <text x="140" y="278" text-anchor="middle" font-size="13" fill="white" font-weight="700">git commit → git push</text>
+                </g>
+                
+                <!-- Developer 2 -->
+                <g transform="translate(740, 280)">
+                    <rect x="0" y="0" width="280" height="300" fill="#f3e5f5" stroke="#9775fa" stroke-width="4" rx="16" filter="url(#shadow)"/>
+                    <text x="140" y="35" text-anchor="middle" font-size="18" font-weight="700" fill="#7950f2">👨‍💻 Developer 2</text>
+                    
+                    <!-- Local Repo -->
+                    <rect x="20" y="60" width="240" height="90" fill="#dbe4ff" stroke="#4c6ef5" stroke-width="3" rx="12"/>
+                    <text x="140" y="85" text-anchor="middle" font-size="14" font-weight="700" fill="#364fc7">Local Repository</text>
+                    <g transform="translate(70, 105)">
+                        <circle cx="0" cy="0" r="12" fill="#4c6ef5"/>
+                        <text x="0" y="4" text-anchor="middle" font-size="10" fill="white" font-weight="700">C1</text>
+                        <line x1="12" y1="0" x2="48" y2="0" stroke="#4c6ef5" stroke-width="2"/>
+                        <circle cx="60" cy="0" r="12" fill="#4c6ef5"/>
+                        <text x="60" y="4" text-anchor="middle" font-size="10" fill="white" font-weight="700">C2</text>
+                    </g>
+                    
+                    <!-- Working Directory -->
+                    <rect x="20" y="170" width="240" height="70" fill="#fff4e6" stroke="#ff922b" stroke-width="3" rx="12"/>
+                    <text x="140" y="195" text-anchor="middle" font-size="14" font-weight="700" fill="#fd7e14">Working Directory</text>
+                    <text x="140" y="220" text-anchor="middle" font-size="12" fill="#495057">📥 Updated files</text>
+                    
+                    <!-- Commands -->
+                    <rect x="50" y="260" width="180" height="25" fill="#9775fa" rx="12"/>
+                    <text x="140" y="278" text-anchor="middle" font-size="13" fill="white" font-weight="700">git pull / fetch</text>
+                </g>
+                
+                <!-- Arrows with better clarity -->
+                <!-- Push Arrow -->
+                <path d="M 300 280 L 450 210" stroke="#51cf66" stroke-width="6" fill="none" 
+                      marker-end="url(#arrowpush2)" stroke-dasharray="8,8" stroke-linecap="round"/>
+                <rect x="325" y="225" width="90" height="30" fill="#51cf66" rx="15"/>
+                <text x="370" y="245" text-anchor="middle" font-size="14" font-weight="700" fill="white">PUSH ⬆</text>
+                
+                <!-- Pull Arrow -->
+                <path d="M 650 210 L 800 280" stroke="#9775fa" stroke-width="6" fill="none" 
+                      marker-end="url(#arrowpull2)" stroke-dasharray="8,8" stroke-linecap="round"/>
+                <rect x="685" y="225" width="90" height="30" fill="#9775fa" rx="15"/>
+                <text x="730" y="245" text-anchor="middle" font-size="14" font-weight="700" fill="white">PULL ⬇</text>
+                
+                <!-- Clone Arrows -->
+                <path d="M 430 205 L 280 270" stroke="#ff922b" stroke-width="3" fill="none" 
+                      marker-end="url(#arrowclone2)" stroke-dasharray="4,4"/>
+                <text x="330" y="230" font-size="12" fill="#fd7e14" font-weight="600">clone</text>
+                
+                <path d="M 670 205 L 820 270" stroke="#ff922b" stroke-width="3" fill="none" 
+                      marker-end="url(#arrowclone2)" stroke-dasharray="4,4"/>
+                <text x="770" y="230" font-size="12" fill="#fd7e14" font-weight="600">clone</text>
+                
+                <!-- Branching Illustration -->
+                <rect x="80" y="620" width="420" height="210" fill="#f8f9ff" stroke="#5c6ac4" stroke-width="3" rx="16" filter="url(#shadow)"/>
+                <text x="290" y="655" text-anchor="middle" font-size="18" font-weight="700" fill="#5c6ac4">🌿 Branching Workflow</text>
+                
+                <!-- Main branch -->
+                <line x1="120" y1="700" x2="460" y2="700" stroke="#495057" stroke-width="4" stroke-linecap="round"/>
+                <circle cx="120" cy="700" r="10" fill="#4c6ef5"/>
+                <circle cx="240" cy="700" r="10" fill="#4c6ef5"/>
+                <circle cx="440" cy="700" r="10" fill="#4c6ef5"/>
+                <text x="120" y="730" text-anchor="middle" font-size="11" fill="#495057" font-weight="600">C1</text>
+                <text x="290" y="680" text-anchor="middle" font-size="13" font-weight="700" fill="#495057">main</text>
+                
+                <!-- Feature branch -->
+                <line x1="240" y1="700" x2="240" y2="755" stroke="#51cf66" stroke-width="3"/>
+                <line x1="240" y1="755" x2="390" y2="755" stroke="#51cf66" stroke-width="3"/>
+                <line x1="390" y1="755" x2="440" y2="700" stroke="#51cf66" stroke-width="3" stroke-dasharray="6,6"/>
+                <circle cx="290" cy="755" r="10" fill="#51cf66"/>
+                <circle cx="390" cy="755" r="10" fill="#51cf66"/>
+                <text x="290" y="785" text-anchor="middle" font-size="11" fill="#495057" font-weight="600">C2</text>
+                <text x="390" y="785" text-anchor="middle" font-size="11" fill="#495057" font-weight="600">C3</text>
+                <text x="315" y="742" text-anchor="middle" font-size="12" font-weight="700" fill="#37b24d">feature-branch</text>
+                <text x="415" y="720" text-anchor="middle" font-size="10" fill="#37b24d" font-weight="600">merge →</text>
+                
+                <!-- GitHub Features -->
+                <rect x="540" y="620" width="480" height="210" fill="#fff5f8" stroke="#e91e63" stroke-width="3" rx="16" filter="url(#shadow)"/>
+                <text x="780" y="655" text-anchor="middle" font-size="18" font-weight="700" fill="#e91e63">✨ GitHub Features</text>
+                
+                <g transform="translate(570, 680)">
+                    <rect x="0" y="0" width="190" height="50" fill="#ffebee" stroke="#e53935" stroke-width="2" rx="10"/>
+                    <text x="95" y="31" text-anchor="middle" font-size="15" fill="#c62828" font-weight="600">🐛 Issues</text>
+                </g>
+                
+                <g transform="translate(790, 680)">
+                    <rect x="0" y="0" width="190" height="50" fill="#e8f5e9" stroke="#43a047" stroke-width="2" rx="10"/>
+                    <text x="95" y="31" text-anchor="middle" font-size="15" fill="#2e7d32" font-weight="600">🔀 Pull Requests</text>
+                </g>
+                
+                <g transform="translate(570, 750)">
+                    <rect x="0" y="0" width="190" height="50" fill="#fff3e0" stroke="#fb8c00" stroke-width="2" rx="10"/>
+                    <text x="95" y="31" text-anchor="middle" font-size="15" fill="#e65100" font-weight="600">⚡ Actions</text>
+                </g>
+                
+                <g transform="translate(790, 750)">
+                    <rect x="0" y="0" width="190" height="50" fill="#f3e5f5" stroke="#8e24aa" stroke-width="2" rx="10"/>
+                    <text x="95" y="31" text-anchor="middle" font-size="15" fill="#6a1b9a" font-weight="600">📊 Projects</text>
+                </g>
+            </svg>
+            
+            <div class="description">
+                <h3>Key GitHub Concepts</h3>
+                <ul>
+                    <li><strong>git clone:</strong> Download a complete copy of a repository from GitHub to your computer</li>
+                    <li><strong>git push:</strong> Upload your local commits to the remote repository on GitHub</li>
+                    <li><strong>git pull:</strong> Download changes from GitHub and merge them into your local branch</li>
+                    <li><strong>git fetch:</strong> Download changes from GitHub but don't merge them (safer than pull)</li>
+                    <li><strong>Branches:</strong> Separate lines of development that allow you to work on features without affecting the main code</li>
+                    <li><strong>Issues:</strong> Track bugs, enhancements, and tasks</li>
+                    <li><strong>Pull Requests:</strong> Propose changes and facilitate code review before merging</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
