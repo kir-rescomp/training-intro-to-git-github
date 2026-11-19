@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Git Basics — Interactive Quiz</title>
+  <style>
+    :root{font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;--bg:#f6f8fb;--card:#ffffff;--muted:#6b7280;--accent:#2563eb;--good:#16a34a;--bad:#dc2626}
+    body{margin:0;background:var(--bg);color:#0f172a}
+    .wrap{max-width:980px;margin:28px auto;padding:28px}
+    header{display:flex;align-items:center;gap:16px}
+    h1{margin:0;font-size:1.4rem}
+    p.lead{margin:6px 0 18px;color:var(--muted)}
+    .card{background:var(--card);border-radius:12px;box-shadow:0 6px 18px rgba(15,23,42,0.06);padding:18px;margin-bottom:18px}
+    .controls{display:flex;gap:8px;align-items:center}
+
+    /* Drag list */
+    .drag-area{display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start}
+    .draggable-list{padding:12px;border-radius:8px;background:#fbfdff;border:1px solid #e6eefc;min-height:200px}
+    .draggable-list h3{margin:0 0 10px 0;font-size:0.95rem}
+    ol.draggable{list-style:none;padding:6px;margin:0;display:flex;flex-direction:column;gap:8px}
+    .draggable li{background:white;padding:10px;border-radius:8px;border:1px solid #e6eefc;display:flex;align-items:center;gap:10px;cursor:grab}
+    .drag-handle{width:28px;height:28px;border-radius:6px;background:#eef4ff;display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent)}
+    .draggable li.dragging{opacity:0.6}
+    .btn{background:var(--accent);color:white;border:none;padding:8px 12px;border-radius:8px;cursor:pointer}
+    .btn.ghost{background:transparent;color:var(--accent);border:1px solid #dbeafe}
+
+    /* MCQ */
+    .mcq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .question{padding:12px;border-radius:8px;border:1px solid #eef2ff;background:#fff}
+    .question h4{margin:0 0 8px 0;font-size:0.95rem}
+    .options label{display:block;padding:6px;border-radius:6px;margin:6px 0;border:1px solid #f1f5f9;cursor:pointer}
+    .options input{margin-right:8px}
+    .feedback{margin-top:8px;font-size:0.92rem}
+
+    .result{padding:12px;margin-top:8px;border-radius:8px}
+    .result.good{background:rgba(22,163,74,0.08);color:var(--good);border:1px solid rgba(22,163,74,0.12)}
+    .result.bad{background:rgba(220,38,38,0.06);color:var(--bad);border:1px solid rgba(220,38,38,0.08)}
+
+    footer{color:var(--muted);font-size:0.9rem;margin-top:14px}
+
+    /* responsive */
+    @media (max-width:900px){.drag-area{grid-template-columns:1fr;}.mcq-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div style="width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,#eef2ff,#f0f9ff);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent)">GIT</div>
+      <div>
+        <h1>Check your understanding: Git basics quiz</h1>
+        <p class="lead">Interactive tasks for beginners who have seen <code>git add</code>, <code>git commit</code> and <code>git push</code>. Drag to order, answer multiple-choice, then check your score.</p>
+      </div>
+    </header>
+
+    <section class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <strong>Task 1 — Put these commands in the correct order</strong>
+        <div class="controls">
+          <button id="check-order" class="btn">Check order</button>
+          <button id="shuffle" class="btn ghost">Shuffle</button>
+        </div>
+      </div>
+
+      <div class="drag-area" style="margin-top:12px">
+        <div class="draggable-list card">
+          <h3>Steps for creating a new file and publishing it to a remote repository</h3>
+          <ol id="draggable" class="draggable" aria-label="Drag list: order steps">
+            <li draggable="true" tabindex="0" data-key="commit"><span class="drag-handle">1</span><span class="text">Run <code>git commit -m "Add file"</code></span></li>
+            <li draggable="true" tabindex="0" data-key="add"><span class="drag-handle">2</span><span class="text">Run <code>git add &lt;file&gt;</code></span></li>
+            <li draggable="true" tabindex="0" data-key="push"><span class="drag-handle">3</span><span class="text">Run <code>git push origin main</code></span></li>
+            <li draggable="true" tabindex="0" data-key="modify"><span class="drag-handle">4</span><span class="text">Create or modify the file in your working directory</span></li>
+          </ol>
+        </div>
+
+        <div class="card" style="height:100%">
+          <h3>Hints & Explanation</h3>
+          <p style="color:var(--muted);line-height:1.4">The correct sequence in Git is:<br><strong>Make changes → stage changes → commit → push</strong>. Use the "Check order" button for feedback and an explanation of each step.</p>
+          <div id="order-feedback" style="margin-top:8px"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <strong>Task 2 — Multiple choice (pick the best answer)</strong>
+      <p class="lead" style="margin-top:6px">Select one answer per question. Click "Grade" when done.</p>
+
+      <div class="mcq-grid" style="margin-top:12px">
+        <!-- Q1 -->
+        <div class="question" data-q="q1">
+          <h4>1) What does <code>git add</code> do?</h4>
+          <div class="options">
+            <label><input type="radio" name="q1" value="a"> Uploads changes to the remote repository</label>
+            <label><input type="radio" name="q1" value="b"> Moves files into the staging area so they can be committed</label>
+            <label><input type="radio" name="q1" value="c"> Permanently deletes untracked files</label>
+          </div>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question" data-q="q2">
+          <h4>2) What does <code>git commit</code> create?</h4>
+          <div class="options">
+            <label><input type="radio" name="q2" value="a"> A snapshot of staged changes recorded in the local repository</label>
+            <label><input type="radio" name="q2" value="b"> A new remote branch</label>
+            <label><input type="radio" name="q2" value="c"> A copy of your repo on GitHub</label>
+          </div>
+          <div class="feedback"></div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question" data-q="q3">
+          <h4>3) What does <code>git push</code> do?</h4>
+          <div class="options">
+            <label><input type="radio" name="q3" value="a"> Copies commits from your local repository to the remote repository</label>
+            <label><input type="radio" name="q3" value="b"> Stages files for commit</label>
+            <label><input type="radio" name="q3" value="c"> Creates a new commit with all local changes</label>
+          </div>
+          <div class="feedback"></div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question" data-q="q4">
+          <h4>4) Which command shows the current branch and staged/un-staged changes?</h4>
+          <div class="options">
+            <label><input type="radio" name="q4" value="a"> <code>git status</code></label>
+            <label><input type="radio" name="q4" value="b"> <code>git log</code></label>
+            <label><input type="radio" name="q4" value="c"> <code>git remote -v</code></label>
+          </div>
+          <div class="feedback"></div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question" data-q="q5">
+          <h4>5) You want to incorporate changes from a feature branch into main. Which basic command merges the feature branch into main?</h4>
+          <div class="options">
+            <label><input type="radio" name="q5" value="a"> <code>git checkout main</code> then <code>git merge feature</code></label>
+            <label><input type="radio" name="q5" value="b"> <code>git add main feature</code></label>
+            <label><input type="radio" name="q5" value="c"> <code>git push origin feature:main</code></label>
+          </div>
+          <div class="feedback"></div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="question" data-q="q6">
+          <h4>6) Which sequence best describes a typical local → remote cycle?</h4>
+          <div class="options">
+            <label><input type="radio" name="q6" value="a"> edit → git add → git commit → git push</label>
+            <label><input type="radio" name="q6" value="b"> git push → edit → git commit → git add</label>
+            <label><input type="radio" name="q6" value="c"> git commit → edit → git add → git push</label>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+        <button id="grade" class="btn">Grade</button>
+        <button id="reset" class="btn ghost">Reset Answers</button>
+        <div id="mcq-result" style="margin-left:auto"></div>
+      </div>
+
+      <div id="final-score" style="margin-top:12px"></div>
+
+    </section>
+
+    <footer>
+      <small>Tip: You can open this HTML file in any modern browser. Want more questions, or a printable version? Ask and I’ll add them.</small>
+    </footer>
+  </div>
+
+  <script>
+    // ------- Drag & Drop ordering logic -------
+    const draggable = document.getElementById('draggable');
+    let dragEl = null;
+
+    draggable.addEventListener('dragstart', e => {
+      dragEl = e.target; e.target.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    draggable.addEventListener('dragend', e => { e.target.classList.remove('dragging'); dragEl = null; });
+
+    draggable.addEventListener('dragover', e => {
+      e.preventDefault();
+      const after = getDragAfterElement(draggable, e.clientY);
+      const dragging = document.querySelector('.dragging');
+      if (!dragging) return;
+      if (after == null) draggable.appendChild(dragging);
+      else draggable.insertBefore(dragging, after);
+    });
+
+    function getDragAfterElement(container, y) {
+      const draggableElements = [...container.querySelectorAll('li:not(.dragging)')];
+      return draggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height/2;
+        if (offset < 0 && offset > closest.offset) return {offset: offset, element: child};
+        return closest;
+      }, {offset: Number.NEGATIVE_INFINITY}).element;
+    }
+
+    // Shuffle helper
+    function shuffleList() {
+      const items = [...draggable.querySelectorAll('li')];
+      for (let i = items.length -1; i>0; i--) {
+        const j = Math.floor(Math.random()*(i+1));
+        draggable.appendChild(items[j]);
+      }
+    }
+    document.getElementById('shuffle').addEventListener('click', () => { shuffleList(); document.getElementById('order-feedback').innerHTML=''; });
+
+    // Check order logic
+    const correctOrder = ['modify','add','commit','push'];
+    document.getElementById('check-order').addEventListener('click', () => {
+      const current = [...draggable.querySelectorAll('li')].map(li => li.dataset.key);
+      const fb = document.getElementById('order-feedback'); fb.innerHTML = '';
+      let ok = true;
+      const list = document.createElement('ol'); list.style.paddingLeft='18px';
+      current.forEach((k,i)=>{
+        const li = document.createElement('li');
+        const correct = (k === correctOrder[i]);
+        li.textContent = `${i+1}. ${draggable.querySelector('li[data-key="'+k+'"] .text').textContent}`;
+        li.style.margin='6px 0';
+        li.style.color = correct ? 'var(--good)' : 'var(--bad)';
+        list.appendChild(li);
+        if (!correct) ok=false;
+      });
+      const result = document.createElement('div');
+      result.className = ok ? 'result good' : 'result bad';
+      result.innerHTML = `<strong>${ok? 'Correct!': 'Not quite'}</strong> — ${ok ? 'Well done.':'The right order is: Make changes → git add → git commit → git push.'}`;
+      fb.appendChild(result);
+      fb.appendChild(list);
+      // add brief explanation
+      const expl = document.createElement('p'); expl.style.color='var(--muted)'; expl.style.marginTop='8px';
+      expl.innerHTML = 'Explanation: <strong>git add</strong> stages changes, <strong>git commit</strong> records them locally, and <strong>git push</strong> sends commits to the remote.';
+      fb.appendChild(expl);
+    });
+
+    // ------- MCQ logic -------
+    const answers = { q1: 'b', q2: 'a', q3: 'a', q4: 'a', q5: 'a', q6: 'a' };
+    const feedbackTexts = {
+      q1: {a:'Incorrect. <code>git add</code> does not upload to remote.', b:'Correct. It stages files for commit.', c:'Incorrect.'},
+      q2: {a:'Correct. A commit is a snapshot stored locally.', b:'Incorrect.', c:'Incorrect.'},
+      q3: {a:'Correct. Push copies commits to remote.', b:'Incorrect.', c:'Incorrect.'},
+      q4: {a:'Correct. <code>git status</code> shows staged/un-staged changes and branch.', b:'Incorrect.', c:'Incorrect.'},
+      q5: {a:'Correct. Checkout main then merge the feature branch.', b:'Incorrect.', c:'Incorrect.'},
+      q6: {a:'Correct. edit → git add → git commit → git push is the typical cycle.', b:'Incorrect.', c:'Incorrect.'}
+    };
+
+    function gradeMCQ(showOverall=true){
+      const qs = document.querySelectorAll('.question');
+      let correctCount=0; let total=0;
+      qs.forEach(q=>{
+        const qid = q.dataset.q; total++;
+        const selected = q.querySelector('input[type=radio]:checked');
+        const fb = q.querySelector('.feedback'); fb.innerHTML='';
+        if (!selected){ fb.innerHTML = '<em style="color:var(--muted)">No answer selected.</em>'; return; }
+        const val = selected.value;
+        if (val === answers[qid]){ fb.innerHTML = `<span style="color:var(--good)">✔ ${feedbackTexts[qid][val]}</span>`; correctCount++; }
+        else { fb.innerHTML = `<span style="color:var(--bad)">✖ ${feedbackTexts[qid][val]}</span>`; }
+      });
+      if (showOverall){
+        const pct = Math.round((correctCount/total)*100);
+        const final = document.getElementById('final-score'); final.innerHTML = '';
+        const box = document.createElement('div'); box.className = (pct>=80)?'result good':'result bad';
+        box.innerHTML = `<strong>Score: ${correctCount}/${total} (${pct}%)</strong> — ${pct>=80 ? 'Great job!' : 'Review the explanations and try again.'}`;
+        final.appendChild(box);
+      }
+      return {correct:correctCount,total:total};
+    }
+
+    document.getElementById('grade').addEventListener('click', () => { gradeMCQ(true); window.scrollTo({top:document.getElementById('final-score').offsetTop-20, behavior:'smooth'}); });
+    document.getElementById('reset').addEventListener('click', () => { document.querySelectorAll('.mcq-grid input[type=radio]').forEach(i=>i.checked=false); document.querySelectorAll('.feedback').forEach(f=>f.innerHTML=''); document.getElementById('final-score').innerHTML=''; });
+
+    // Accessibility: keyboard move up/down for selected focused li
+    draggable.addEventListener('keydown', (e) => {
+      const el = document.activeElement.closest && document.activeElement.closest('li');
+      if (!el) return;
+      if (e.key === 'ArrowUp'){
+        const prev = el.previousElementSibling; if (prev) draggable.insertBefore(el, prev);
+      } else if (e.key === 'ArrowDown'){
+        const next = el.nextElementSibling; if (next) draggable.insertBefore(next, el);
+      }
+    });
+
+    // initialize: shuffle so learners don't just memorize positions
+    shuffleList();
+  </script>
+</body>
+</html>

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git Command Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #071039 0%, #1f4867 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            background: linear-gradient(135deg, #6579c8, #222b43);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        
+        .selector-group {
+            margin-bottom: 30px;
+        }
+        
+        label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        select, input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+        
+        select:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .result-box {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .result-box.show {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .command {
+            background: #2d3748;
+            color: #68d391;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 16px;
+            margin: 20px 0;
+            position: relative;
+            overflow-x: auto;
+        }
+        
+        .copy-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: #5568d3;
+        }
+        
+        .copy-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .explanation {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        
+        .explanation h3 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+        
+        .explanation ul {
+            margin-left: 20px;
+            color: #333;
+        }
+        
+        .explanation li {
+            margin: 5px 0;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        
+        .warning strong {
+            color: #856404;
+        }
+        
+        .input-group {
+            margin-top: 15px;
+        }
+        
+        .input-group input {
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Git Command Generator</h1>
+        <p class="subtitle">Find the right Git commands without memorizing syntax</p>
+        
+        <div class="selector-group">
+            <label for="action">I want to...</label>
+            <select id="action" onchange="updateOptions()">
+                <option value="">-- Select an action --</option>
+                <option value="add">Add changes to staging</option>
+                <option value="commit">Commit changes</option>
+                <option value="push">Push to remote</option>
+                <option value="pull">Pull from remote</option>
+                <option value="branch">Work with branches</option>
+                <option value="checkout">Switch branches/restore files</option>
+                <option value="merge">Merge branches</option>
+                <option value="rebase">Rebase my branch</option>
+                <option value="reset">Undo changes</option>
+                <option value="revert">Revert a commit</option>
+                <option value="stash">Stash changes</option>
+                <option value="clone">Clone a repository</option>
+                <option value="remote">Manage remotes</option>
+                <option value="log">View history</option>
+                <option value="diff">See differences</option>
+                <option value="tag">Work with tags</option>
+            </select>
+        </div>
+        
+        <div class="selector-group" id="subActionGroup" style="display: none;">
+            <label for="subAction">Specifically, I want to...</label>
+            <select id="subAction" onchange="generateCommand()">
+                <option value="">-- Select specific action --</option>
+            </select>
+        </div>
+        
+        <div class="selector-group" id="inputGroup" style="display: none;">
+            <label for="userInput" id="inputLabel">Enter value:</label>
+            <input type="text" id="userInput" placeholder="e.g., branch-name" oninput="generateCommand()">
+        </div>
+        
+        <div class="result-box" id="resultBox">
+            <h2>Your Command:</h2>
+            <div class="command" id="commandOutput"></div>
+            <button class="copy-btn" onclick="copyCommand()">📋 Copy Command</button>
+            <div class="explanation" id="explanation"></div>
+            <div class="warning" id="warning" style="display: none;"></div>
+        </div>
+    </div>
+    
+    <script>
+        const commands = {
+            add: {
+                'all': { cmd: 'git add .', desc: 'Stage all changes in current directory', input: false },
+                'file': { cmd: 'git add <file>', desc: 'Stage specific file', input: true, placeholder: 'filename.txt' },
+                'interactive': { cmd: 'git add -p', desc: 'Interactively choose changes to stage', input: false },
+                'update': { cmd: 'git add -u', desc: 'Stage modified and deleted files (not new)', input: false }
+            },
+            commit: {
+                'message': { cmd: 'git commit -m "<message>"', desc: 'Commit staged changes with message', input: true, placeholder: 'Your commit message' },
+                'amend': { cmd: 'git commit --amend -m "<message>"', desc: 'Amend last commit', input: true, placeholder: 'New commit message' },
+                'all': { cmd: 'git commit -am "<message>"', desc: 'Stage and commit all tracked files', input: true, placeholder: 'Commit message' }
+            },
+            push: {
+                'current': { cmd: 'git push origin <branch>', desc: 'Push current branch to remote', input: true, placeholder: 'branch-name' },
+                'upstream': { cmd: 'git push -u origin <branch>', desc: 'Push and set upstream', input: true, placeholder: 'branch-name' },
+                'force': { cmd: 'git push --force-with-lease origin <branch>', desc: 'Force push (safer)', input: true, placeholder: 'branch-name', warning: '⚠️ Force pushing rewrites history. Use with caution!' },
+                'all': { cmd: 'git push --all origin', desc: 'Push all branches', input: false },
+                'tags': { cmd: 'git push --tags', desc: 'Push all tags', input: false }
+            },
+            pull: {
+                'default': { cmd: 'git pull origin <branch>', desc: 'Pull from remote branch', input: true, placeholder: 'branch-name' },
+                'rebase': { cmd: 'git pull --rebase origin <branch>', desc: 'Pull with rebase', input: true, placeholder: 'branch-name' },
+                'all': { cmd: 'git pull --all', desc: 'Pull all branches', input: false }
+            },
+            branch: {
+                'create': { cmd: 'git branch <branch-name>', desc: 'Create new branch', input: true, placeholder: 'new-branch-name' },
+                'delete': { cmd: 'git branch -d <branch-name>', desc: 'Delete local branch', input: true, placeholder: 'branch-name' },
+                'force-delete': { cmd: 'git branch -D <branch-name>', desc: 'Force delete branch', input: true, placeholder: 'branch-name', warning: '⚠️ This will delete the branch even if not merged!' },
+                'list': { cmd: 'git branch', desc: 'List all local branches', input: false },
+                'list-all': { cmd: 'git branch -a', desc: 'List all branches (including remote)', input: false },
+                'rename': { cmd: 'git branch -m <new-name>', desc: 'Rename current branch', input: true, placeholder: 'new-branch-name' }
+            },
+            checkout: {
+                'branch': { cmd: 'git checkout <branch>', desc: 'Switch to existing branch', input: true, placeholder: 'branch-name' },
+                'new': { cmd: 'git checkout -b <branch>', desc: 'Create and switch to new branch', input: true, placeholder: 'new-branch-name' },
+                'file': { cmd: 'git checkout -- <file>', desc: 'Discard changes in file', input: true, placeholder: 'filename.txt' },
+                'previous': { cmd: 'git checkout -', desc: 'Switch to previous branch', input: false }
+            },
+            merge: {
+                'branch': { cmd: 'git merge <branch>', desc: 'Merge branch into current branch', input: true, placeholder: 'branch-name' },
+                'no-ff': { cmd: 'git merge --no-ff <branch>', desc: 'Merge without fast-forward', input: true, placeholder: 'branch-name' },
+                'abort': { cmd: 'git merge --abort', desc: 'Abort current merge', input: false }
+            },
+            rebase: {
+                'branch': { cmd: 'git rebase <branch>', desc: 'Rebase current branch onto another', input: true, placeholder: 'branch-name' },
+                'interactive': { cmd: 'git rebase -i HEAD~<n>', desc: 'Interactive rebase last n commits', input: true, placeholder: '3' },
+                'continue': { cmd: 'git rebase --continue', desc: 'Continue rebase after resolving conflicts', input: false },
+                'abort': { cmd: 'git rebase --abort', desc: 'Abort rebase', input: false }
+            },
+            reset: {
+                'soft': { cmd: 'git reset --soft HEAD~1', desc: 'Undo last commit, keep changes staged', input: false },
+                'mixed': { cmd: 'git reset HEAD~1', desc: 'Undo last commit, keep changes unstaged', input: false },
+                'hard': { cmd: 'git reset --hard HEAD~1', desc: 'Undo last commit and discard changes', input: false, warning: '⚠️ This will permanently delete your changes!' },
+                'file': { cmd: 'git reset HEAD <file>', desc: 'Unstage file', input: true, placeholder: 'filename.txt' }
+            },
+            revert: {
+                'commit': { cmd: 'git revert <commit>', desc: 'Revert a specific commit', input: true, placeholder: 'commit-hash' },
+                'last': { cmd: 'git revert HEAD', desc: 'Revert last commit', input: false }
+            },
+            stash: {
+                'save': { cmd: 'git stash', desc: 'Stash current changes', input: false },
+                'save-message': { cmd: 'git stash save "<message>"', desc: 'Stash with message', input: true, placeholder: 'Work in progress' },
+                'list': { cmd: 'git stash list', desc: 'List all stashes', input: false },
+                'apply': { cmd: 'git stash apply', desc: 'Apply most recent stash', input: false },
+                'pop': { cmd: 'git stash pop', desc: 'Apply and remove most recent stash', input: false },
+                'drop': { cmd: 'git stash drop', desc: 'Delete most recent stash', input: false },
+                'clear': { cmd: 'git stash clear', desc: 'Delete all stashes', input: false, warning: '⚠️ This will delete all stashed changes!' }
+            },
+            clone: {
+                'https': { cmd: 'git clone <url>', desc: 'Clone repository via HTTPS', input: true, placeholder: 'https://github.com/user/repo.git' },
+                'ssh': { cmd: 'git clone <url>', desc: 'Clone repository via SSH', input: true, placeholder: 'git@github.com:user/repo.git' },
+                'folder': { cmd: 'git clone <url> <folder>', desc: 'Clone into specific folder', input: true, placeholder: 'https://... my-folder' }
+            },
+            remote: {
+                'add': { cmd: 'git remote add origin <url>', desc: 'Add remote repository', input: true, placeholder: 'https://github.com/user/repo.git' },
+                'list': { cmd: 'git remote -v', desc: 'List all remotes', input: false },
+                'remove': { cmd: 'git remote remove <name>', desc: 'Remove remote', input: true, placeholder: 'origin' },
+                'rename': { cmd: 'git remote rename <old> <new>', desc: 'Rename remote', input: true, placeholder: 'origin upstream' }
+            },
+            log: {
+                'default': { cmd: 'git log', desc: 'View commit history', input: false },
+                'oneline': { cmd: 'git log --oneline', desc: 'View condensed history', input: false },
+                'graph': { cmd: 'git log --graph --oneline --all', desc: 'View graphical history', input: false },
+                'author': { cmd: 'git log --author="<name>"', desc: 'View commits by author', input: true, placeholder: 'John Doe' },
+                'file': { cmd: 'git log -- <file>', desc: 'View history of specific file', input: true, placeholder: 'filename.txt' }
+            },
+            diff: {
+                'unstaged': { cmd: 'git diff', desc: 'Show unstaged changes', input: false },
+                'staged': { cmd: 'git diff --staged', desc: 'Show staged changes', input: false },
+                'commits': { cmd: 'git diff <commit1> <commit2>', desc: 'Diff between commits', input: true, placeholder: 'abc123 def456' },
+                'branches': { cmd: 'git diff <branch1> <branch2>', desc: 'Diff between branches', input: true, placeholder: 'main feature' }
+            },
+            tag: {
+                'create': { cmd: 'git tag <tag-name>', desc: 'Create lightweight tag', input: true, placeholder: 'v1.0.0' },
+                'annotated': { cmd: 'git tag -a <tag-name> -m "<message>"', desc: 'Create annotated tag', input: true, placeholder: 'v1.0.0 "Release 1.0"' },
+                'list': { cmd: 'git tag', desc: 'List all tags', input: false },
+                'push': { cmd: 'git push origin <tag-name>', desc: 'Push tag to remote', input: true, placeholder: 'v1.0.0' },
+                'delete': { cmd: 'git tag -d <tag-name>', desc: 'Delete local tag', input: true, placeholder: 'v1.0.0' }
+            }
+        };
+        
+        function updateOptions() {
+            const action = document.getElementById('action').value;
+            const subActionGroup = document.getElementById('subActionGroup');
+            const subActionSelect = document.getElementById('subAction');
+            const resultBox = document.getElementById('resultBox');
+            const inputGroup = document.getElementById('inputGroup');
+            
+            resultBox.classList.remove('show');
+            inputGroup.style.display = 'none';
+            
+            if (action && commands[action]) {
+                subActionSelect.innerHTML = '<option value="">-- Select specific action --</option>';
+                Object.keys(commands[action]).forEach(key => {
+                    const option = document.createElement('option');
+                    option.value = key;
+                    option.textContent = commands[action][key].desc;
+                    subActionSelect.appendChild(option);
+                });
+                subActionGroup.style.display = 'block';
+            } else {
+                subActionGroup.style.display = 'none';
+            }
+        }
+        
+        function generateCommand() {
+            const action = document.getElementById('action').value;
+            const subAction = document.getElementById('subAction').value;
+            const userInput = document.getElementById('userInput').value;
+            const resultBox = document.getElementById('resultBox');
+            const commandOutput = document.getElementById('commandOutput');
+            const explanation = document.getElementById('explanation');
+            const warning = document.getElementById('warning');
+            const inputGroup = document.getElementById('inputGroup');
+            const inputLabel = document.getElementById('inputLabel');
+            
+            if (!action || !subAction) return;
+            
+            const cmdData = commands[action][subAction];
+            
+            if (cmdData.input) {
+                inputGroup.style.display = 'block';
+                inputLabel.textContent = `Enter ${cmdData.placeholder}:`;
+                document.getElementById('userInput').placeholder = cmdData.placeholder;
+                
+                if (!userInput) return;
+                
+                let finalCmd = cmdData.cmd
+                    .replace('<file>', userInput)
+                    .replace('<branch>', userInput)
+                    .replace('<branch-name>', userInput)
+                    .replace('<new-name>', userInput)
+                    .replace('<message>', userInput)
+                    .replace('<url>', userInput)
+                    .replace('<commit>', userInput)
+                    .replace('<name>', userInput)
+                    .replace('<old> <new>', userInput)
+                    .replace('<tag-name>', userInput)
+                    .replace('<commit1> <commit2>', userInput)
+                    .replace('<branch1> <branch2>', userInput)
+                    .replace('<n>', userInput)
+                    .replace('<folder>', userInput);
+                
+                commandOutput.textContent = finalCmd;
+            } else {
+                inputGroup.style.display = 'none';
+                commandOutput.textContent = cmdData.cmd;
+            }
+            
+            explanation.innerHTML = `<h3>What this does:</h3><p>${cmdData.desc}</p>`;
+            
+            if (cmdData.warning) {
+                warning.innerHTML = `<strong>Warning:</strong> ${cmdData.warning}`;
+                warning.style.display = 'block';
+            } else {
+                warning.style.display = 'none';
+            }
+            
+            resultBox.classList.add('show');
+        }
+        
+        function copyCommand() {
+            const commandText = document.getElementById('commandOutput').textContent;
+            navigator.clipboard.writeText(commandText).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = '✅ Copied!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
