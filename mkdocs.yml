@@ -155,6 +155,7 @@ nav:
     - GH Tokens: credentials/3.tokens.md
 
   - Git Quiz: 8.git_quiz.md
+  - Summary: 9.first-steps.md
 
   - Supplementary: 
     - Git Workflow & Cycle: supplementary/0.1.git_workflow_cycle.md

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Git and GitHub: First Steps</title>
+<style>
+  :root {
+    --oxford: #002147;
+    --oxford-mid: #2b4a75;
+    --oxford-soft: #e8edf4;
+    --line: #c9d3e1;
+    --text: #1d2733;
+    --muted: #5a6778;
+    --code-bg: #0f1b2d;
+    --code-text: #e6edf6;
+    --local: #2b6cb0;
+    --remote: #2f855a;
+    --warn-bg: #fff8e6;
+    --warn-line: #e3b341;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--text);
+    background: #ffffff;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 20px 16px 28px; }
+
+  header h1 { margin: 0 0 4px; font-size: 1.5rem; color: var(--oxford); }
+  header p { margin: 0 0 18px; color: var(--muted); font-size: 0.95rem; }
+
+  /* Overview diagram */
+  .diagram {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 8px;
+    background: #fbfcfe;
+  }
+  .diagram svg { width: 100%; height: auto; display: block; }
+  .dim { opacity: 0.25; transition: opacity 0.3s ease; }
+  .hl { opacity: 1; transition: opacity 0.3s ease; }
+
+  /* Stepper */
+  .stepper {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin: 16px 0;
+  }
+  .step-btn {
+    border: 1px solid var(--line);
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 10px 8px;
+    cursor: pointer;
+    text-align: left;
+    font: inherit;
+    color: var(--text);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .step-btn:hover { border-color: var(--oxford-mid); }
+  .step-btn .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--oxford-soft); color: var(--oxford);
+    font-weight: 700; font-size: 0.8rem; margin-bottom: 4px;
+  }
+  .step-btn .lbl { display: block; font-size: 0.82rem; font-weight: 600; line-height: 1.3; }
+  .step-btn.active { background: var(--oxford); border-color: var(--oxford); color: #ffffff; }
+  .step-btn.active .num { background: #ffffff; color: var(--oxford); }
+
+  /* Card */
+  .card {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px;
+    background: #ffffff;
+  }
+  .card-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .card h2 { margin: 0; font-size: 1.2rem; color: var(--oxford); }
+  .badge {
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+    padding: 3px 8px; border-radius: 999px;
+  }
+  .badge.local { background: #e6effa; color: var(--local); }
+  .badge.remote { background: #e5f4ec; color: var(--remote); }
+  .badge.freq { background: var(--oxford-soft); color: var(--oxford); }
+  .why { color: var(--muted); margin: 4px 0 14px; }
+
+  .card h3 { font-size: 0.95rem; margin: 16px 0 6px; color: var(--oxford); }
+  ol.actions { margin: 0; padding-left: 20px; }
+  ol.actions li { margin: 4px 0; }
+  .path {
+    display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px;
+    font-size: 0.88rem;
+  }
+  .path span {
+    background: var(--oxford-soft); color: var(--oxford);
+    padding: 1px 7px; border-radius: 5px; font-weight: 600;
+  }
+  .path i { font-style: normal; color: var(--muted); }
+
+  .code {
+    position: relative;
+    background: var(--code-bg);
+    color: var(--code-text);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin: 8px 0;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 0.85rem;
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .code .c { color: #8fa3bf; }
+  .copy {
+    position: absolute; top: 8px; right: 8px;
+    background: rgba(255,255,255,0.12); color: #ffffff;
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 6px; padding: 3px 9px; font-size: 0.75rem; cursor: pointer;
+    font-family: inherit;
+  }
+  .copy:hover { background: rgba(255,255,255,0.22); }
+
+  .output {
+    background: #f4f6f9; border: 1px solid var(--line); border-radius: 8px;
+    padding: 10px 14px; margin: 8px 0;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 0.82rem; white-space: pre-wrap; color: #334155;
+  }
+
+  .note {
+    border-left: 4px solid var(--oxford-mid);
+    background: var(--oxford-soft);
+    padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 12px 0 0;
+    font-size: 0.9rem;
+  }
+  .note.warn { border-left-color: var(--warn-line); background: var(--warn-bg); }
+  code.inline {
+    background: var(--oxford-soft); color: var(--oxford);
+    padding: 1px 5px; border-radius: 4px; font-size: 0.85em;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  }
+
+  .nav {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 16px; gap: 8px;
+  }
+  .nav button {
+    font: inherit; font-weight: 600; cursor: pointer;
+    border-radius: 8px; padding: 8px 16px;
+    border: 1px solid var(--oxford); background: #ffffff; color: var(--oxford);
+  }
+  .nav button.primary { background: var(--oxford); color: #ffffff; }
+  .nav button:disabled { opacity: 0.35; cursor: default; }
+  .nav .count { color: var(--muted); font-size: 0.85rem; }
+
+  @media (max-width: 640px) {
+    .stepper { grid-template-columns: repeat(5, 1fr); gap: 4px; }
+    .step-btn { padding: 8px 4px; text-align: center; }
+    .step-btn .lbl { display: none; }
+    .card { padding: 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Git and GitHub: First Steps</h1>
+    <p>The minimum set-up and workflow, from a fresh computer to keeping a repository in sync. Select a step, or use the arrow keys.</p>
+  </header>
+
+  <!-- Overview diagram -->
+  <div class="diagram" aria-hidden="true">
+    <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, Segoe UI, Roboto, Arial, sans-serif">
+      <defs>
+        <marker id="arrL" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#002147"/>
+        </marker>
+      </defs>
+
+      <!-- Local device -->
+      <rect x="15" y="15" width="270" height="220" rx="14" fill="#f3f7fc" stroke="#2b6cb0" stroke-width="1.5"/>
+      <text x="35" y="44" font-size="15" font-weight="700" fill="#2b6cb0">Your computer</text>
+      <text x="35" y="62" font-size="11" fill="#5a6778">device-specific</text>
+
+      <g id="d-config" class="dim">
+        <rect x="35" y="78" width="230" height="52" rx="9" fill="#ffffff" stroke="#2b6cb0"/>
+        <text x="50" y="100" font-size="13" font-weight="700" fill="#002147">1 · git config</text>
+        <text x="50" y="118" font-size="11" fill="#5a6778">name · email · default branch</text>
+      </g>
+
+      <g id="d-local" class="dim">
+        <rect x="35" y="145" width="230" height="72" rx="9" fill="#ffffff" stroke="#2b6cb0"/>
+        <text x="50" y="167" font-size="13" font-weight="700" fill="#002147">Local repository</text>
+        <text x="50" y="185" font-size="11" fill="#5a6778">git-test/</text>
+        <text x="50" y="204" font-size="11" fill="#5a6778">edit → add → commit</text>
+      </g>
+
+      <!-- GitHub -->
+      <rect x="475" y="15" width="270" height="220" rx="14" fill="#f2f9f5" stroke="#2f855a" stroke-width="1.5"/>
+      <text x="495" y="44" font-size="15" font-weight="700" fill="#2f855a">GitHub</text>
+      <text x="495" y="62" font-size="11" fill="#5a6778">your account, any device</text>
+
+      <g id="d-token" class="dim">
+        <rect x="495" y="78" width="230" height="52" rx="9" fill="#ffffff" stroke="#2f855a"/>
+        <text x="510" y="100" font-size="13" font-weight="700" fill="#002147">2 · Personal access token</text>
+        <text x="510" y="118" font-size="11" fill="#5a6778">used instead of a password</text>
+      </g>
+
+      <g id="d-remote" class="dim">
+        <rect x="495" y="145" width="230" height="72" rx="9" fill="#ffffff" stroke="#2f855a"/>
+        <text x="510" y="167" font-size="13" font-weight="700" fill="#002147">3 · Remote repository</text>
+        <text x="510" y="185" font-size="11" fill="#5a6778">github.com/USERNAME/git-test</text>
+        <text x="510" y="204" font-size="11" fill="#5a6778">origin</text>
+      </g>
+
+      <!-- Arrows -->
+      <g id="d-clone" class="dim">
+        <line x1="470" y1="152" x2="292" y2="152" stroke="#002147" stroke-width="2" marker-end="url(#arrL)"/>
+        <text x="381" y="145" font-size="12" font-weight="700" fill="#002147" text-anchor="middle">4 · git clone</text>
+      </g>
+      <g id="d-push" class="dim">
+        <line x1="292" y1="182" x2="470" y2="182" stroke="#002147" stroke-width="2" marker-end="url(#arrL)"/>
+        <text x="381" y="175" font-size="12" font-weight="700" fill="#002147" text-anchor="middle">4 · git push</text>
+      </g>
+      <g id="d-fetch" class="dim">
+        <line x1="470" y1="212" x2="292" y2="212" stroke="#002147" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrL)"/>
+        <text x="381" y="205" font-size="12" font-weight="700" fill="#002147" text-anchor="middle">5 · git fetch / pull</text>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Stepper -->
+  <nav class="stepper" id="stepper"></nav>
+
+  <!-- Step content -->
+  <section class="card" id="card" aria-live="polite"></section>
+
+  <div class="nav">
+    <button id="prev">← Previous</button>
+    <span class="count" id="count"></span>
+    <button id="next" class="primary">Next →</button>
+  </div>
+</div>
+
+<script>
+const steps = [
+  {
+    short: "Configure Git",
+    title: "Configure Git on your computer",
+    where: [["local", "Your computer"], ["freq", "Once per computer"]],
+    highlight: ["d-config"],
+    why: "Git records a name and email address in every commit you make. These settings are stored on the computer itself, so they must be set on each device you use (laptop, desktop, cluster login node).",
+    body: `
+      <div class="code"><button class="copy">Copy</button>git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+git config --global init.defaultBranch main</div>
+      <h3>Check the settings</h3>
+      <div class="code"><button class="copy">Copy</button>git config --global --list</div>
+      <div class="note">Use the same email address as your GitHub account (or your GitHub <em>noreply</em> address), so that your commits are linked to your profile.</div>
+      <div class="note"><code class="inline">init.defaultBranch main</code> only affects repositories created locally with <code class="inline">git init</code>. A cloned repository uses the branch name defined on GitHub.</div>
+    `
+  },
+  {
+    short: "Create a token",
+    title: "Create a personal access token on GitHub",
+    where: [["remote", "GitHub website"], ["freq", "When the token expires"]],
+    highlight: ["d-token"],
+    why: "GitHub does not accept your account password for Git operations. When Git asks for a password over HTTPS, you provide a personal access token instead.",
+    body: `
+      <h3>Navigate to the token page</h3>
+      <div class="path">
+        <span>Your avatar (top right)</span><i>›</i>
+        <span>Settings</span><i>›</i>
+        <span>&lt;&gt; Developer settings</span><i>›</i>
+        <span>Personal access tokens</span><i>›</i>
+        <span>Tokens (classic)</span><i>›</i>
+        <span>Generate new token</span><i>›</i>
+        <span>Generate new token (classic)</span>
+      </div>
+      <p style="margin:6px 0 0;font-size:0.88rem;color:#5a6778;"><em>Developer settings</em> is the last item in the left-hand sidebar of the Settings page.</p>
+      <h3>Fill in the form</h3>
+      <ol class="actions">
+        <li><strong>Note:</strong> a descriptive name, e.g. <em>Workshop laptop</em></li>
+        <li><strong>Expiration:</strong> e.g. 30 or 90 days</li>
+        <li><strong>Scopes:</strong> tick <code class="inline">repo</code> (sufficient for clone, push and pull)</li>
+        <li>Select <strong>Generate token</strong> at the bottom of the page</li>
+      </ol>
+      <div class="note warn"><strong>Copy the token immediately</strong> (it begins with <code class="inline">ghp_</code>). GitHub displays it only once. Treat it like a password: do not paste it into files, chats or repositories.</div>
+    `
+  },
+  {
+    short: "Create a repo",
+    title: "Create a test repository on GitHub",
+    where: [["remote", "GitHub website"]],
+    highlight: ["d-remote"],
+    why: "This repository on GitHub is the remote copy, known to Git as origin. It is the shared version that you and collaborators push to and pull from.",
+    body: `
+      <h3>Steps</h3>
+      <ol class="actions">
+        <li>Select <strong>+</strong> (top right) › <strong>New repository</strong></li>
+        <li><strong>Repository name:</strong> <code class="inline">git-test</code></li>
+        <li>Visibility: <strong>Public</strong> or <strong>Private</strong></li>
+        <li>Tick <strong>Add a README file</strong>, so the repository has a first commit to clone</li>
+        <li>Select <strong>Create repository</strong></li>
+      </ol>
+      <h3>Copy the HTTPS address</h3>
+      <div class="path"><span>Code</span><i>›</i><span>HTTPS</span><i>›</i><span>Copy</span></div>
+      <div class="output">https://github.com/USERNAME/git-test.git</div>
+    `
+  },
+  {
+    short: "Clone, commit, push",
+    title: "Clone, change, commit and push",
+    where: [["local", "Your computer"], ["remote", "GitHub"]],
+    highlight: ["d-clone", "d-local", "d-push", "d-remote"],
+    why: "Cloning creates a local copy linked to GitHub. Changes are recorded locally with add and commit, and only reach GitHub when you push.",
+    body: `
+      <h3>1. Clone the repository</h3>
+      <div class="code"><button class="copy">Copy</button>git clone https://github.com/USERNAME/git-test.git
+cd git-test</div>
+      <h3>2. Make a change</h3>
+      <p style="margin:4px 0;">Open <code class="inline">README.md</code> in a text editor, add a line and save it.</p>
+      <h3>3. Stage, commit and push</h3>
+      <div class="code"><button class="copy">Copy</button><span class="c"># see what has changed</span>
+git status
+
+<span class="c"># stage the change</span>
+git add README.md
+
+<span class="c"># record it locally</span>
+git commit -m "Add a line to README"
+
+<span class="c"># send it to GitHub</span>
+git push</div>
+      <h3>On the first push, Git asks for credentials</h3>
+      <div class="output">Username for 'https://github.com': USERNAME
+Password for 'https://USERNAME@github.com': <em>paste the token here</em></div>
+      <div class="note warn">Nothing appears on screen when the token is pasted. This is expected; press Enter.</div>
+      <div class="note">To avoid entering the token on every push, enable a credential helper: <code class="inline">git config --global credential.helper osxkeychain</code> (macOS) or <code class="inline">git config --global credential.helper store</code> (Linux; stored as plain text in <code class="inline">~/.git-credentials</code>). Git for Windows includes Git Credential Manager, which may open a browser sign-in window instead.</div>
+      <p style="margin:12px 0 0;">Refresh the repository page on GitHub to confirm that the change has arrived.</p>
+    `
+  },
+  {
+    short: "Sync changes",
+    title: "Bring changes from GitHub into your local copy",
+    where: [["remote", "GitHub"], ["local", "Your computer"]],
+    highlight: ["d-remote", "d-fetch", "d-local"],
+    why: "When a change is made on GitHub (by a collaborator, or by you on another device), your local copy does not update automatically. fetch downloads the new commits; pull applies them to your files.",
+    body: `
+      <h3>1. Make a change upstream (on GitHub)</h3>
+      <ol class="actions">
+        <li>Open <code class="inline">README.md</code> in the repository on GitHub</li>
+        <li>Select the pencil icon (<strong>Edit this file</strong>) and change a line</li>
+        <li>Select <strong>Commit changes…</strong> and confirm</li>
+      </ol>
+      <h3>2. Check what has changed (does not modify your files)</h3>
+      <div class="code"><button class="copy">Copy</button>git fetch
+git status</div>
+      <div class="output">Your branch is behind 'origin/main' by 1 commit, and can be fast-forwarded.</div>
+      <div class="code"><button class="copy">Copy</button><span class="c"># list the incoming commits</span>
+git log --oneline main..origin/main</div>
+      <h3>3. Update your local copy</h3>
+      <div class="code"><button class="copy">Copy</button>git pull
+git log --oneline -3</div>
+      <div class="note"><strong>fetch</strong> downloads new commits but leaves your files unchanged. <strong>pull</strong> is a fetch followed by a merge into your current branch.</div>
+      <div class="note">Good practice: run <code class="inline">git pull</code> before starting new work, so that you always build on the latest version.</div>
+    `
+  }
+];
+
+const allIds = ["d-config", "d-local", "d-token", "d-remote", "d-clone", "d-push", "d-fetch"];
+let current = 0;
+
+const stepper = document.getElementById("stepper");
+const card = document.getElementById("card");
+const prevBtn = document.getElementById("prev");
+const nextBtn = document.getElementById("next");
+const count = document.getElementById("count");
+
+steps.forEach((s, i) => {
+  const b = document.createElement("button");
+  b.className = "step-btn";
+  b.innerHTML = `<span class="num">${i + 1}</span><span class="lbl">${s.short}</span>`;
+  b.setAttribute("aria-label", `Step ${i + 1}: ${s.short}`);
+  b.addEventListener("click", () => show(i));
+  stepper.appendChild(b);
+});
+
+function show(i) {
+  current = i;
+  const s = steps[i];
+  const badges = s.where.map(([cls, txt]) => `<span class="badge ${cls}">${txt}</span>`).join("");
+  card.innerHTML = `
+    <div class="card-head"><h2>${i + 1}. ${s.title}</h2>${badges}</div>
+    <p class="why">${s.why}</p>
+    ${s.body}`;
+  [...stepper.children].forEach((b, j) => b.classList.toggle("active", j === i));
+  allIds.forEach(id => {
+    const el = document.getElementById(id);
+    const on = s.highlight.includes(id);
+    el.classList.toggle("hl", on);
+    el.classList.toggle("dim", !on);
+  });
+  prevBtn.disabled = i === 0;
+  nextBtn.disabled = i === steps.length - 1;
+  count.textContent = `Step ${i + 1} of ${steps.length}`;
+  bindCopy();
+}
+
+function bindCopy() {
+  card.querySelectorAll(".copy").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const block = btn.parentElement.cloneNode(true);
+      block.querySelector(".copy").remove();
+      const text = block.textContent.trim();
+      const done = () => { btn.textContent = "Copied"; setTimeout(() => btn.textContent = "Copy", 1500); };
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(done).catch(() => fallback(text, done));
+      } else {
+        fallback(text, done);
+      }
+    });
+  });
+}
+
+function fallback(text, done) {
+  const ta = document.createElement("textarea");
+  ta.value = text;
+  ta.style.position = "fixed";
+  ta.style.opacity = "0";
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand("copy"); done(); } catch (e) { /* no-op */ }
+  ta.remove();
+}
+
+prevBtn.addEventListener("click", () => current > 0 && show(current - 1));
+nextBtn.addEventListener("click", () => current < steps.length - 1 && show(current + 1));
+document.addEventListener("keydown", e => {
+  if (e.key === "ArrowRight" && current < steps.length - 1) show(current + 1);
+  if (e.key === "ArrowLeft" && current > 0) show(current - 1);
+});
+
+show(0);
+</script>
+</body>
+</html>
